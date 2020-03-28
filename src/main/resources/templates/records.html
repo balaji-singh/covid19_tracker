@@ -81,22 +81,7 @@
 
 	</div>
 	<br>
-	<div class="container">
-		<table border="1" width="50%" align="center">
-			<tr bgcolor="#3F729B">
-				<th>Confirmed</th>
-				<th>Deaths</th>
-				<th>Recovered</th>
-			</tr>
-			<tr>
-				<td th:text="${trackRecords.latest.confirmed}" th:style="${trackRecords.latest.confirmed != 0 ? 'color: #c51162;' : 'color: blue'}" />
-				<td th:text="${trackRecords.latest.deaths}" th:style="${trackRecords.latest.deaths != 0 ? 'color: #ff4444;' : 'color: blue'}"  />
-				<td th:text="${trackRecords.latest.recovered}" th:style="${trackRecords.latest.deaths != 0 ? 'color: #007E33;' : 'color: blue'}"  />
 
-			</tr>
-		</table>
-	</div>
-	<br>
 	<div class="container">
 		<table width="100%" border=1>
 			<tr>
@@ -108,21 +93,22 @@
 
 							</thead>
 							<tbody>
-								<tr th:each="location: ${trackRecords.locations}">
+								<tr th:each="trackRecord: ${trackRecords}">
 									<td>
 
 										<button type="button" class="collapsible"
 											data-toggle="collapse"
-											th:attr="data-target='#'+${location.country }"
-											th:text="${location.country+'-'+location.latest.confirmed}"/>
+											th:attr="data-target='#'+${trackRecord.country_region }"
+											th:text="${trackRecord.country_region }" />
 
-										<div th:id="${location.country}" class="collapse">
+										<div th:id="${trackRecord.country_region}" class="collapse">
 											<table>
 												<tr>
-													<td th:text="${location.country}"/>
-													<td th:text="${location.latest.confirmed}" />
-													<td th:text="${location.latest.deaths}" />
-													<td th:text="${location.latest.recovered}" />
+													<td th:text="${trackRecord.country_region}" />
+													<td th:text="${trackRecord.province_state}" />
+													<td th:text="${trackRecord.totalConfirmed}" />
+													<td th:text="${trackRecord.totalDeath}" />
+													<td th:text="${trackRecord.totalRecovered}" />
 												</tr>
 											</table>
 										</div>
