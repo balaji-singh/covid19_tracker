@@ -39,9 +39,9 @@ public class Covid19ServiceImpl implements Covid19Service {
 		return covid19Data;
 	}
 
-//	public static void main(String[] args) {
-//
-//		Covid19ServiceImpl covid19ServiceImpl = new Covid19ServiceImpl();
-//		covid19ServiceImpl.getCovid19Data();
-//	}
+	public static void main(String[] args) {
+
+		Covid19ServiceImpl covid19ServiceImpl = new Covid19ServiceImpl();
+		covid19ServiceImpl.getCovid19Data();
+	}
 }

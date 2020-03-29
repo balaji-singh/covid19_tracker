@@ -3,7 +3,6 @@
  */
 package com.masterjavaonline.covid19.model;
 
-import java.util.Collections;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -33,6 +32,9 @@ public class Covid19Data  {
 		return locations;
 	}
 
+	public void setLocations(List<Locations> locations) {
+		this.locations = locations;
+	}
 	
 	
 	
