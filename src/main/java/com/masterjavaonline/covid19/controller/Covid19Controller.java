@@ -3,6 +3,7 @@
  */
 package com.masterjavaonline.covid19.controller;
 
+
 import java.util.List;
 import java.util.Set;
 
@@ -59,5 +60,6 @@ public class Covid19Controller {
 		modelAndView.setViewName("/records");
 		return modelAndView;
 	}
+
 
 }
