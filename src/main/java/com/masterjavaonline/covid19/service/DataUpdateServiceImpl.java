@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -98,7 +99,6 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 		List<CsvData> loadRecovered = loadData(fileRecovered);
 
 		List<GlobalData> globalDatas = processData(loadConfirmed, loadDeaths, loadRecovered);
-
 		
 		return globalDatas;
 
@@ -108,35 +108,55 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 			List<CsvData> loadRecovered) {
 
 		Iterator<CsvData> i1 = loadConfirmed.iterator();
-		Iterator<CsvData> i2 = loadDeaths.iterator();
-		Iterator<CsvData> i3 = loadRecovered.iterator();
+
 		List<GlobalData> globalDatas = new ArrayList<GlobalData>();
 
-		while (i1.hasNext() && i2.hasNext() && i3.hasNext()) {
+		while (i1.hasNext()) {
 			GlobalData globalData = new GlobalData();
 			CsvData csvDataConfirmed = (CsvData) i1.next();
-			CsvData csvDataDeaths = (CsvData) i2.next();
-			CsvData csvDataRecovered = (CsvData) i3.next();
-			if (csvDataConfirmed.getCountry_region().equals(csvDataDeaths.getCountry_region())
-					&& csvDataConfirmed.getCountry_region().equals(csvDataRecovered.getCountry_region())) {
-
-				globalData.setCountry_region(csvDataConfirmed.getCountry_region());
-				globalData.setLatitude(csvDataConfirmed.getLatitude());
-				globalData.setLongtude(csvDataConfirmed.getLongtude());
-				globalData.setProvince_state(csvDataConfirmed.getProvince_state());
-				globalData.setTimelineConfirmed(csvDataConfirmed.getTimeline());
-				globalData.setTimelineDeath(csvDataDeaths.getTimeline());
-				globalData.setTimelineRecovered(csvDataRecovered.getTimeline());
-				globalData.setTotalConfirmed(csvDataConfirmed.getTotal());
-				globalData.setTotalDeath(csvDataDeaths.getTotal());
-				globalData.setTotalRecovered(csvDataRecovered.getTotal());
-
-			}
+			globalData.setCountry_region(csvDataConfirmed.getCountry_region());
+			globalData.setLatitude(csvDataConfirmed.getLatitude());
+			globalData.setLongtude(csvDataConfirmed.getLongtude());
+			globalData.setProvince_state(csvDataConfirmed.getProvince_state());
+			globalData.setTimelineConfirmed(csvDataConfirmed.getTimeline());
+			findDeaths(globalData, loadDeaths);
+			findRecovered(globalData, loadRecovered);
+			globalData.setTotalConfirmed(csvDataConfirmed.getTotal());
 
 			globalDatas.add(globalData);
 
 		}
 		return globalDatas;
+
+	}
+
+	private void findRecovered(GlobalData globalData, List<CsvData> loadRecovered) {
+		Iterator<CsvData> i3 = loadRecovered.iterator();
+		while (i3.hasNext()) {
+			CsvData csvDataRecovered = (CsvData) i3.next();
+
+			if (globalData.getCountry_region().equals(csvDataRecovered.getCountry_region())
+					&& globalData.getProvince_state().equals(csvDataRecovered.getProvince_state())) {
+				globalData.setTimelineRecovered(csvDataRecovered.getTimeline());
+				globalData.setTotalRecovered(csvDataRecovered.getTotal());
+
+			}
+		}
+
+	}
+
+	private void findDeaths(GlobalData globalData, List<CsvData> loadDeaths) {
+		Iterator<CsvData> i2 = loadDeaths.iterator();
+		while (i2.hasNext()) {
+			CsvData csvDataDeaths = (CsvData) i2.next();
+
+			if (globalData.getCountry_region().equals(csvDataDeaths.getCountry_region())
+					&& globalData.getProvince_state().equals(csvDataDeaths.getProvince_state())) {
+				globalData.setTimelineDeath(csvDataDeaths.getTimeline());
+				globalData.setTotalDeath(csvDataDeaths.getTotal());
+
+			}
+		}
 
 	}
 
@@ -171,7 +191,6 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 				}
 
 				csvData.setTimeline(timeline);
-				System.out.println(csvData);
 				csvDatas.add(csvData);
 				counter++;
 

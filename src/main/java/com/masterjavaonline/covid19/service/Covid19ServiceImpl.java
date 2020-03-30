@@ -40,8 +40,6 @@ public class Covid19ServiceImpl implements Covid19Service {
 		return covid19Data;
 	}
 
-	
-
 
 
 }

@@ -74,6 +74,102 @@
 	background-color: #c51162;
 }
 </style>
+<script th:inline="javascript">
+window.onload = function () {
+var pontos = /*[[${trackRecords}]]*/'default'
+var data= pontos.find(ponto => ponto.country_region === 'India');
+var dates = pontos[0].timelineConfirmed;
+var data  = pontos.find(ponto => ponto.country_region === 'India');
+var confirmed=data.timelineConfirmed;
+var deaths=data.timelineDeath;
+var recovered=data.timelineRecovered;
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2",
+	title:{
+		text: "India Covid19 Live Data"
+	},
+	axisX:{
+		valueFormatString: "DD/MM/YY",
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	axisY: {
+		
+		title: "Number of Cases",
+		crosshair: {
+			enabled: true
+		}
+	},
+	toolTip:{
+		shared:true
+	},  
+	legend:{
+		cursor:"pointer",
+		verticalAlign: "bottom",
+		horizontalAlign: "left",
+		dockInsidePlotArea: true,
+		itemclick: toogleDataSeries
+	},
+	data: [{
+		type: "line",
+		yValueFormatString: "0",
+		axisYIndex: 0,
+		showInLegend: true,
+		name: "Total Visit",
+		markerType: "square",
+		xValueFormatString: "DD/MMM/YY",
+		color: "#F08080",
+		dataPoints: []
+	},
+	{
+		type: "line",
+		yValueFormatString: "0",
+		axisYIndex: 0,
+		showInLegend: true,
+		name: "Total Visit",
+		markerType: "square",
+		xValueFormatString: "DD/MMM/YY",
+		color: "#CC0000",
+		dataPoints: []
+	},
+	{
+		type: "line",
+		yValueFormatString: "0",
+		axisYIndex: 0,
+		showInLegend: true,
+		name: "Total Visit",
+		markerType: "square",
+		xValueFormatString: "DD/MMM/YY",
+		color: "#007E33",
+		dataPoints: []
+	}]
+});
+dates.forEach(myFunction);
+function myFunction(value, index, array) {
+	
+	xValue = new Date(value);
+	chart.options.data[0].dataPoints.push({ x: xValue, y: parseInt(confirmed[index])});
+	chart.options.data[1].dataPoints.push({ x: xValue, y: parseInt(deaths[index])});
+	chart.options.data[2].dataPoints.push({ x: xValue, y: parseInt(recovered[index])});
+	
+}
+chart.render();
+
+ function toogleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else{
+		e.dataSeries.visible = true;
+	}
+	chart.render();
+} 
+
+}
+</script>
 </head>
 <body>
 	<div class="container" align="center">
@@ -81,51 +177,51 @@
 
 	</div>
 	<br>
+	<table width="100%" border=1>
+		<tr>
+			<td width="30%)">
+				<div class="container" align="left">
+					<table id="tracker" class="table table-striped" width="100%">
+						<thead>
+							<th class="th-sm">Country</th>
 
-	<div class="container">
-		<table width="100%" border=1>
-			<tr>
-				<td width="50%)">
-					<div class="container" align="left">
-						<table id="tracker" class="table table-striped" width="100%">
-							<thead>
-								<th class="th-sm">Country</th>
+						</thead>
+						<tbody>
+							<tr th:each="trackRecord: ${trackRecords}">
+								<td>
 
-							</thead>
-							<tbody>
-								<tr th:each="trackRecord: ${trackRecords}">
-									<td>
+									<button type="button" class="collapsible"
+										data-toggle="collapse"
+										th:attr="data-target='#'+${trackRecord.country_region}"
+										th:text="${trackRecord.country_region +' '+trackRecord.province_state }" />
 
-										<button type="button" class="collapsible"
-											data-toggle="collapse"
-											th:attr="data-target='#'+${trackRecord.country_region }"
-											th:text="${trackRecord.country_region }" />
+									<div th:id="${trackRecord.country_region}" class="collapse">
+										<table>
+											<tr>
+												<td th:text="${'Cnformed-'+trackRecord.totalConfirmed}"
+													th:style="${trackRecord.totalConfirmed != 0 ? 'color: #c51162;' : 'color: blue'}" />
+												<td th:text="${'Fatal-'+trackRecord.totalDeath}"
+													th:style="${trackRecord.totalDeath != 0 ? 'color: #ff4444;' : 'color: blue'}" />
+												<td th:text="${'Recoverd-'+trackRecord.totalRecovered}"
+													th:style="${trackRecord.totalRecovered != 0 ? 'color: #007E33;' : 'color: blue'}" />
+											</tr>
+										</table>
+									</div>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</td>
+			<td width="70%" valign="top">
 
-										<div th:id="${trackRecord.country_region}" class="collapse">
-											<table>
-												<tr>
-													<td th:text="${trackRecord.country_region}" />
-													<td th:text="${trackRecord.province_state}" />
-													<td th:text="${trackRecord.totalConfirmed}" />
-													<td th:text="${trackRecord.totalDeath}" />
-													<td th:text="${trackRecord.totalRecovered}" />
-												</tr>
-											</table>
-										</div>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</td>
-				<td width="50%" align="center">
-					<div>
-						<iframe width="100%" height="600" src="chart" frameborder="0"
-							allowfullscreen></iframe>
-					</div>
-			</tr>
+				<div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
-		</table>
-	</div>
+			</td>
+		</tr>
+
+	</table>
+
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 
 </body>
