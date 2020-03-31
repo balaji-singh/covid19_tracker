@@ -59,7 +59,7 @@ public class Covid19Controller {
 		//Collections.sort(globalDatas, new ConfirmedCasesSort());
 		 Collections.sort(globalDatas);
 		modelAndView.addObject("trackRecords", globalDatas);
-		modelAndView.setViewName("/records");
+		modelAndView.setViewName("records");
 		return modelAndView;
 	}
 
