@@ -56,7 +56,8 @@ public class Covid19Controller {
 	public ModelAndView getGlobalCovidRecords(ModelAndView modelAndView) throws Exception {
 
 		List<GlobalData> globalDatas = dataUpdateServiceImpl.getGlobalWHOData();
-		Collections.sort(globalDatas, new ConfirmedCasesSort());
+		//Collections.sort(globalDatas, new ConfirmedCasesSort());
+		 Collections.sort(globalDatas);
 		modelAndView.addObject("trackRecords", globalDatas);
 		modelAndView.setViewName("/records");
 		return modelAndView;

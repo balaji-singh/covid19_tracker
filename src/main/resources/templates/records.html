@@ -3,7 +3,7 @@
 <head>
 <title>Covid19 Live Tracker</title>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=0.85">
+<meta name="viewport" content="width=device-width, initial-scale=0.8">
 
 <link rel='icon' href='image/icon.png' type="image/png" sizes="16x16" />
 
@@ -175,8 +175,7 @@ chart.render();
 
 }
 
-</script>
-<script th:inline="javascript">//<![CDATA[ 
+
 function chartUpdate(id){
 	var nameArr = id.split(',');
 	var pontos = /*[[${trackRecords}]]*/'default'
@@ -290,6 +289,7 @@ function chartUpdate(id){
 	}
 	chart.render();
 
+	
 	 function toogleDataSeries(e){
 		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
 			e.dataSeries.visible = false;
@@ -306,58 +306,56 @@ function chartUpdate(id){
 <body>
 	<div class="container" align="center">
 		<h1>Covid19 Live Tracker</h1>
-
 	</div>
-	<br>
-	<table width="100%" border=1>
-		<tr>
-			<td width="30%)">
-				<div class="table-responsive" align="left" id="myGroup">
-					<table id="tracker" class="table table-dark table-sm  "
-						width="100%">
-						<thead>
-							<th class="th-sm">Country</th>
+	<div class="table-responsive">
+		<table width="100%" border=1>
+			<tr>
+				<td width="30%)">
+					<div class="table-responsive" align="left" id="myGroup">
+						<table id="tracker" class="table table-dark table-sm  "
+							width="100%">
+							<thead>
+								<th class="th-sm">Country</th>
 
-						</thead>
-						<tbody>
-							<tr th:each="trackRecord: ${trackRecords}">
-								<td>
+							</thead>
+							<tbody>
+								<tr th:each="trackRecord: ${trackRecords}">
+									<td>
 
-									<button 
-										th:id="${trackRecord.country_region+','+trackRecord.province_state}"
-										type="button" class="collapsible"
-										onclick="chartUpdate(this.id);" data-toggle="collapse"
-										th:attr="data-target='#'+${trackRecord.country_region+trackRecord.totalConfirmed}"
-										th:text="${trackRecord.country_region +' '+trackRecord.province_state}"></button>
+										<button
+											th:id="${trackRecord.country_region+','+trackRecord.province_state}"
+											type="button" class="collapsible"
+											onclick="chartUpdate(this.id);" data-toggle="collapse"
+											th:attr="data-target='#'+${trackRecord.country_region+trackRecord.totalConfirmed}"
+											th:text="${trackRecord.country_region +' '+trackRecord.province_state}"></button>
 
-									<div
-										th:id="${trackRecord.country_region+trackRecord.totalConfirmed}"
-										class="collapse" data-parent="#myGroup">
-										<table>
-											<tr>
-												<td th:text="${'Cnformed-'+trackRecord.totalConfirmed}"
-													th:style="${trackRecord.totalConfirmed != 0 ? 'color: #c51162;' : 'color:  #c51162'}" />
-												<td th:text="${'Fatal-'+trackRecord.totalDeath}"
-													th:style="${trackRecord.totalDeath != 0 ? 'color: #ff4444;' : 'color: #ff4444'}" />
-												<td th:text="${'Recoverd-'+trackRecord.totalRecovered}"
-													th:style="${trackRecord.totalRecovered != 0 ? 'color: #007E33;' : 'color: #007E33'}" />
-											</tr>
-										</table>
-									</div>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</td>
-			<td width="70%" valign="top">
+										<div
+											th:id="${trackRecord.country_region+trackRecord.totalConfirmed}"
+											class="collapse" data-parent="#myGroup">
+											<table>
+												<tr>
+													<td th:text="${'Cnformed-'+trackRecord.totalConfirmed}"
+														th:style="${trackRecord.totalConfirmed != 0 ? 'color: #c51162;' : 'color:  #c51162'}" />
+													<td th:text="${'Fatal-'+trackRecord.totalDeath}"
+														th:style="${trackRecord.totalDeath != 0 ? 'color: #ff4444;' : 'color: #ff4444'}" />
+													<td th:text="${'Recoverd-'+trackRecord.totalRecovered}"
+														th:style="${trackRecord.totalRecovered != 0 ? 'color: #007E33;' : 'color: #007E33'}" />
+												</tr>
+											</table>
+										</div>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</td>
+				<td width="70%" valign="top">
+					<div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
-				<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+				</td>
+			</tr>
 
-			</td>
-		</tr>
-
-	</table>
-
+		</table>
+	</div>
 	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 

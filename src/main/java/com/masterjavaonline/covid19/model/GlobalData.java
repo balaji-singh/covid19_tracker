@@ -2,7 +2,7 @@ package com.masterjavaonline.covid19.model;
 
 import java.util.List;
 
-public class GlobalData {
+public class GlobalData implements Comparable<GlobalData> {
 
 	private String province_state;
 	private String country_region;
@@ -101,6 +101,18 @@ public class GlobalData {
 
 	public void setTotalRecovered(int totalRecovered) {
 		this.totalRecovered = totalRecovered;
+	}
+
+	@Override
+	public int compareTo(GlobalData globalData) {
+
+		if (this.totalConfirmed > globalData.totalConfirmed) {
+			return 1;
+		} else if (this.totalConfirmed < globalData.totalConfirmed) {
+			return -1;
+		} else
+			return 0;
+
 	}
 
 }
