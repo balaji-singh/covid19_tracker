@@ -3,7 +3,7 @@
 <head>
 <title>Covid19 Live Tracker</title>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=0.9">
+<meta name="viewport" content="width=device-width, initial-scale=0.85">
 
 <link rel='icon' href='image/icon.png' type="image/png" sizes="16x16" />
 
@@ -264,9 +264,28 @@ function chartUpdate(id){
 		
 		xValue = new Date(value);
 		chart.options.title.text = id+" Covid19 Live Data";
-		chart.options.data[0].dataPoints.push({ x: xValue, y: parseInt(confirmed[index])});
-		chart.options.data[1].dataPoints.push({ x: xValue, y: parseInt(deaths[index])});
-		chart.options.data[2].dataPoints.push({ x: xValue, y: parseInt(recovered[index])});
+			try {
+				chart.options.data[0].dataPoints.push({ x: xValue, y: parseInt(confirmed[index])});
+			}
+			catch(err) {
+				chart.options.data[0].dataPoints.push({ x: xValue, y: parseInt(0)});
+			}
+			try {
+			chart.options.data[1].dataPoints.push({ x: xValue, y: parseInt(deaths[index])});
+			
+			}
+			catch(err) {
+			 
+				chart.options.data[1].dataPoints.push({ x: xValue, y: parseInt(0)});
+			}
+			try {
+				chart.options.data[2].dataPoints.push({ x: xValue, y: parseInt(recovered[index])});
+			}
+			catch(err) {
+			 
+				chart.options.data[2].dataPoints.push({ x: xValue, y: parseInt(0)});
+			}
+		
 		
 	}
 	chart.render();
@@ -301,27 +320,27 @@ function chartUpdate(id){
 
 						</thead>
 						<tbody>
-							<tr class="tr-sm" th:each="trackRecord: ${trackRecords}">
-								<td class="td-sm">
+							<tr th:each="trackRecord: ${trackRecords}">
+								<td>
 
 									<button
 										th:id="${trackRecord.country_region+','+trackRecord.province_state}"
 										type="button" class="collapsible"
 										onclick="chartUpdate(this.id);" data-toggle="collapse"
-										th:attr="data-target='#'+${trackRecord.country_region+trackRecord.province_state}"
-										th:text="${trackRecord.country_region +' '+trackRecord.province_state}" />
+										th:attr="data-target='#'+${trackRecord.country_region+trackRecord.totalConfirmed}"
+										th:text="${trackRecord.country_region +' '+trackRecord.province_state}"></button>
 
 									<div
-										th:id="${trackRecord.country_region+trackRecord.province_state}"
+										th:id="${trackRecord.country_region+trackRecord.totalConfirmed}"
 										class="collapse">
 										<table>
 											<tr>
 												<td th:text="${'Cnformed-'+trackRecord.totalConfirmed}"
-													th:style="${trackRecord.totalConfirmed != 0 ? 'color: #c51162;' : 'color: blue'}" />
+													th:style="${trackRecord.totalConfirmed != 0 ? 'color: #c51162;' : 'color:  #c51162'}" />
 												<td th:text="${'Fatal-'+trackRecord.totalDeath}"
-													th:style="${trackRecord.totalDeath != 0 ? 'color: #ff4444;' : 'color: blue'}" />
+													th:style="${trackRecord.totalDeath != 0 ? 'color: #ff4444;' : 'color: #ff4444'}" />
 												<td th:text="${'Recoverd-'+trackRecord.totalRecovered}"
-													th:style="${trackRecord.totalRecovered != 0 ? 'color: #007E33;' : 'color: blue'}" />
+													th:style="${trackRecord.totalRecovered != 0 ? 'color: #007E33;' : 'color: #007E33'}" />
 											</tr>
 										</table>
 									</div>
