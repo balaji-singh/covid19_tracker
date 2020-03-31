@@ -312,7 +312,7 @@ function chartUpdate(id){
 	<table width="100%" border=1>
 		<tr>
 			<td width="30%)">
-				<div class="table-responsive" align="left">
+				<div class="table-responsive" align="left" id="myGroup">
 					<table id="tracker" class="table table-dark table-sm  "
 						width="100%">
 						<thead>
@@ -323,7 +323,7 @@ function chartUpdate(id){
 							<tr th:each="trackRecord: ${trackRecords}">
 								<td>
 
-									<button
+									<button 
 										th:id="${trackRecord.country_region+','+trackRecord.province_state}"
 										type="button" class="collapsible"
 										onclick="chartUpdate(this.id);" data-toggle="collapse"
@@ -332,7 +332,7 @@ function chartUpdate(id){
 
 									<div
 										th:id="${trackRecord.country_region+trackRecord.totalConfirmed}"
-										class="collapse">
+										class="collapse" data-parent="#myGroup">
 										<table>
 											<tr>
 												<td th:text="${'Cnformed-'+trackRecord.totalConfirmed}"
