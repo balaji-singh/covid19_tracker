@@ -32,6 +32,7 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 	@Override
 	public String updateGlobalWHOData() throws Exception {
 
+		String directory = System.getProperty("user.home");
 		String confirmedUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
 		String deathsUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
 		String recoveredUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv";
@@ -41,9 +42,9 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 		URL urlRecovered = new URL(recoveredUrl);
 
 		// File where to be downloaded
-		File fileConfirmed = new File("time_series_covid19_confirmed_global.csv");
-		File fileDeaths = new File("time_series_covid19_deaths_global.csv");
-		File fileRecovered = new File("time_series_covid19_recovered_global.csv");
+		File fileConfirmed = new File(directory + File.separator + "time_series_covid19_confirmed_global.csv");
+		File fileDeaths = new File(directory + File.separator + "time_series_covid19_deaths_global.csv");
+		File fileRecovered = new File(directory + File.separator + "time_series_covid19_recovered_global.csv");
 
 		updateURLToFile(urlConfirmed, fileConfirmed);
 		updateURLToFile(urlDeaths, fileDeaths);
@@ -80,7 +81,7 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 			input.close();
 			output.close();
 
-			System.out.println("File '" + file + "' downloaded successfully!");
+			System.out.println("File '" + file.getAbsolutePath() + "' downloaded successfully!");
 		} catch (IOException ioEx) {
 			ioEx.printStackTrace();
 		}
@@ -89,17 +90,17 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 
 	@Override
 	public List<GlobalData> getGlobalWHOData() {
-
-		File fileConfirmed = new File("time_series_covid19_confirmed_global.csv");
-		File fileDeaths = new File("time_series_covid19_deaths_global.csv");
-		File fileRecovered = new File("time_series_covid19_recovered_global.csv");
+		String directory = System.getProperty("user.home");
+		File fileConfirmed = new File(directory + File.separator + "time_series_covid19_confirmed_global.csv");
+		File fileDeaths = new File(directory + File.separator + "time_series_covid19_deaths_global.csv");
+		File fileRecovered = new File(directory + File.separator + "time_series_covid19_recovered_global.csv");
 
 		List<CsvData> loadConfirmed = loadData(fileConfirmed);
 		List<CsvData> loadDeaths = loadData(fileDeaths);
 		List<CsvData> loadRecovered = loadData(fileRecovered);
 
 		List<GlobalData> globalDatas = processData(loadConfirmed, loadDeaths, loadRecovered);
-		
+
 		return globalDatas;
 
 	}
@@ -172,6 +173,9 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 			br = new BufferedReader(new FileReader(file));
 
 			while ((line = br.readLine()) != null) {
+				if (line.contains("Korea, South")) {
+					line = line.replace("\"Korea, South\"", "Korea-South");
+				}
 				CsvData csvData = new CsvData();
 				String[] csvFileData = line.split(cvsSplitBy);
 				System.out.println("\n");

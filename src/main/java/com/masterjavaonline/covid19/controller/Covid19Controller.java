@@ -35,7 +35,7 @@ public class Covid19Controller {
 	@Autowired
 	private DataUpdateServiceImpl dataUpdateServiceImpl;
 
-	//@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+	// @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public ModelAndView getCovidRecords(ModelAndView modelAndView) {
 
 		Covid19Data covid19Data = covid19Service.getCovid19Data();
@@ -52,11 +52,11 @@ public class Covid19Controller {
 		dataUpdateServiceImpl.updateGlobalWHOData();
 	}
 
-	@RequestMapping(value = {"/", "/home" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public ModelAndView getGlobalCovidRecords(ModelAndView modelAndView) throws Exception {
 
 		List<GlobalData> globalDatas = dataUpdateServiceImpl.getGlobalWHOData();
-		  Collections.sort(globalDatas, new ConfirmedCasesSort());
+		Collections.sort(globalDatas, new ConfirmedCasesSort());
 		modelAndView.addObject("trackRecords", globalDatas);
 		modelAndView.setViewName("/records");
 		return modelAndView;
