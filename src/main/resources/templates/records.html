@@ -3,7 +3,7 @@
 <head>
 <title>Covid19 Live Tracker</title>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=0.9">
 
 <link rel='icon' href='image/icon.png' type="image/png" sizes="16x16" />
 
@@ -76,10 +76,14 @@
 </style>
 <script th:inline="javascript">
 window.onload = function () {
+	/* var scale = 'scale(0.7)';
+	 document.body.style.webkitTransform =       // Chrome, Opera, Safari
+	 document.body.style.msTransform =          // IE 9
+	 document.body.style.transform = scale; */
+	 
 var pontos = /*[[${trackRecords}]]*/'default'
 var data= pontos.find(ponto => ponto.country_region === 'India');
 var dates = pontos[0].timelineConfirmed;
-var data  = pontos.find(ponto => ponto.country_region === 'India');
 var confirmed=data.timelineConfirmed;
 var deaths=data.timelineDeath;
 var recovered=data.timelineRecovered;
@@ -112,36 +116,36 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		verticalAlign: "bottom",
 		horizontalAlign: "left",
 		dockInsidePlotArea: true,
-		itemclick: toogleDataSeries
+		//itemclick: toogleDataSeries
 	},
 	data: [{
-		type: "line",
+		type: "spline",
 		yValueFormatString: "0",
 		axisYIndex: 0,
 		showInLegend: true,
-		name: "Total Visit",
+		name: "Daily Cases",
 		markerType: "square",
 		xValueFormatString: "DD/MMM/YY",
 		color: "#F08080",
 		dataPoints: []
 	},
 	{
-		type: "line",
+		type: "spline",
 		yValueFormatString: "0",
 		axisYIndex: 0,
 		showInLegend: true,
-		name: "Total Visit",
+		name: "Fatal",
 		markerType: "square",
 		xValueFormatString: "DD/MMM/YY",
 		color: "#CC0000",
 		dataPoints: []
 	},
 	{
-		type: "line",
+		type: "spline",
 		yValueFormatString: "0",
 		axisYIndex: 0,
 		showInLegend: true,
-		name: "Total Visit",
+		name: "Recovered",
 		markerType: "square",
 		xValueFormatString: "DD/MMM/YY",
 		color: "#007E33",
@@ -168,7 +172,116 @@ chart.render();
 	chart.render();
 } 
 
+
 }
+
+</script>
+<script th:inline="javascript">//<![CDATA[ 
+function chartUpdate(id){
+	var nameArr = id.split(',');
+	var pontos = /*[[${trackRecords}]]*/'default'
+	var data;
+	
+	if(nameArr[1].length>0){
+		
+		data=pontos.find(ponto => ponto.province_state === nameArr[1] );
+	}
+	else{
+		data=pontos.find(ponto => ponto.country_region === nameArr[0] );
+	}
+	
+	var dates = pontos[0].timelineConfirmed;
+	var confirmed=data.timelineConfirmed;
+	var deaths=data.timelineDeath;
+	var recovered=data.timelineRecovered;
+
+	var chart = new CanvasJS.Chart("chartContainer", {
+		animationEnabled: true,
+		theme: "light2",
+		title:{
+			text: "India Covid19 Live Data"
+		},
+		axisX:{
+			valueFormatString: "DD/MM/YY",
+			crosshair: {
+				enabled: true,
+				snapToDataPoint: true
+			}
+		},
+		axisY: {
+			
+			title: "Number of Cases",
+			crosshair: {
+				enabled: true
+			}
+		},
+		toolTip:{
+			shared:true
+		},  
+		legend:{
+			cursor:"pointer",
+			verticalAlign: "bottom",
+			horizontalAlign: "left",
+			dockInsidePlotArea: true,
+			//itemclick: toogleDataSeries
+		},
+		data: [{
+			type: "spline",
+			yValueFormatString: "0",
+			axisYIndex: 0,
+			showInLegend: true,
+			name: "Daily Cases",
+			markerType: "square",
+			xValueFormatString: "DD/MMM/YY",
+			color: "#F08080",
+			dataPoints: []
+		},
+		{
+			type: "spline",
+			yValueFormatString: "0",
+			axisYIndex: 0,
+			showInLegend: true,
+			name: "Fatal",
+			markerType: "square",
+			xValueFormatString: "DD/MMM/YY",
+			color: "#CC0000",
+			dataPoints: []
+		},
+		{
+			type: "spline",
+			yValueFormatString: "0",
+			axisYIndex: 0,
+			showInLegend: true,
+			name: "Recovered",
+			markerType: "square",
+			xValueFormatString: "DD/MMM/YY",
+			color: "#007E33",
+			dataPoints: []
+		}]
+	});
+	dates.forEach(myFunction);
+	function myFunction(value, index, array) {
+		
+		xValue = new Date(value);
+		chart.options.title.text = id+" Covid19 Live Data";
+		chart.options.data[0].dataPoints.push({ x: xValue, y: parseInt(confirmed[index])});
+		chart.options.data[1].dataPoints.push({ x: xValue, y: parseInt(deaths[index])});
+		chart.options.data[2].dataPoints.push({ x: xValue, y: parseInt(recovered[index])});
+		
+	}
+	chart.render();
+
+	 function toogleDataSeries(e){
+		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+			e.dataSeries.visible = false;
+		} else{
+			e.dataSeries.visible = true;
+		}
+		chart.render();
+	} 
+
+}
+//]]>  
 </script>
 </head>
 <body>
@@ -180,22 +293,27 @@ chart.render();
 	<table width="100%" border=1>
 		<tr>
 			<td width="30%)">
-				<div class="container" align="left">
-					<table id="tracker" class="table table-striped" width="100%">
+				<div class="table-responsive" align="left">
+					<table id="tracker" class="table table-dark table-sm  "
+						width="100%">
 						<thead>
 							<th class="th-sm">Country</th>
 
 						</thead>
 						<tbody>
-							<tr th:each="trackRecord: ${trackRecords}">
-								<td>
+							<tr class="tr-sm" th:each="trackRecord: ${trackRecords}">
+								<td class="td-sm">
 
-									<button type="button" class="collapsible"
-										data-toggle="collapse"
-										th:attr="data-target='#'+${trackRecord.country_region}"
-										th:text="${trackRecord.country_region +' '+trackRecord.province_state }" />
+									<button
+										th:id="${trackRecord.country_region+','+trackRecord.province_state}"
+										type="button" class="collapsible"
+										onclick="chartUpdate(this.id);" data-toggle="collapse"
+										th:attr="data-target='#'+${trackRecord.country_region+trackRecord.province_state}"
+										th:text="${trackRecord.country_region +' '+trackRecord.province_state}" />
 
-									<div th:id="${trackRecord.country_region}" class="collapse">
+									<div
+										th:id="${trackRecord.country_region+trackRecord.province_state}"
+										class="collapse">
 										<table>
 											<tr>
 												<td th:text="${'Cnformed-'+trackRecord.totalConfirmed}"

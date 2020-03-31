@@ -23,7 +23,7 @@ public class ScheduledTasks {
 	@Autowired
 	private DataUpdateServiceImpl dataUpdateServiceImpl;
 	
-	@Scheduled(fixedRate = 5000000)
+	@Scheduled(fixedRate = 500000)
 	public void reportCurrentTime() throws Exception {
 		dataUpdateServiceImpl.updateGlobalWHOData();
 		logger.info("The time is now {}", dateFormat.format(new Date()));
