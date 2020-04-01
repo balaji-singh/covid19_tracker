@@ -3,9 +3,6 @@
  */
 package com.masterjavaonline.covid19.controller;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.masterjavaonline.covid19.model.Covid19Data;
-import com.masterjavaonline.covid19.model.GlobalData;
+import com.masterjavaonline.covid19.model.GlobalCovidData;
 import com.masterjavaonline.covid19.service.Covid19ServiceImpl;
 import com.masterjavaonline.covid19.service.DataUpdateServiceImpl;
-import com.masterjavaonline.covid19.util.ConfirmedCasesSort;
 
 /**
  * @author balasingh
@@ -55,10 +51,10 @@ public class Covid19Controller {
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public ModelAndView getGlobalCovidRecords(ModelAndView modelAndView) throws Exception {
 
-		List<GlobalData> globalDatas = dataUpdateServiceImpl.getGlobalWHOData();
+		GlobalCovidData globalCovidData = dataUpdateServiceImpl.getGlobalWHOData();
 		//Collections.sort(globalDatas, new ConfirmedCasesSort());
-		 Collections.sort(globalDatas);
-		modelAndView.addObject("trackRecords", globalDatas);
+		 //Collections.sort(globalCovidData);
+		modelAndView.addObject("trackRecords", globalCovidData);
 		modelAndView.setViewName("records");
 		return modelAndView;
 	}
