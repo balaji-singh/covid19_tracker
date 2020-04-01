@@ -89,9 +89,9 @@ var confirmed=data.timelineConfirmed;
 var deaths=data.timelineDeath;
 var recovered=data.timelineRecovered;
 
-var totalConfirmed=confirmed.pop();
-var totalDeths=deaths.pop();
-var totalRecovered=recovered.pop();
+var totalConfirmed=confirmed[confirmed.length-1];
+var totalDeths=deaths[deaths.length-1];
+var totalRecovered=recovered[recovered.length-1];
 
  chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
@@ -208,9 +208,9 @@ function chartUpdate(id){
 	var confirmed=data.timelineConfirmed;
 	var deaths=data.timelineDeath;
 	var recovered=data.timelineRecovered;
-	var totalConfirmed=confirmed.pop();
-	var totalDeths=deaths.pop();
-	var totalRecovered=recovered.pop();
+	var totalConfirmed=confirmed[confirmed.length-1];
+	var totalDeths=deaths[deaths.length-1];
+	var totalRecovered=recovered[recovered.length-1];
 	
 	 chart = new CanvasJS.Chart("chartContainer", {
 		animationEnabled: true,
