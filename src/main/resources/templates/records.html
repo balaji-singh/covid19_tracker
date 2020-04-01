@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150662257-1"></script>
+<script async
+	src="https://www.googletagmanager.com/gtag/js?id=UA-150662257-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -10,10 +11,18 @@
 
   gtag('config', 'UA-150662257-1');
 </script>
-
+<meta name="description"
+	content=" Track confirmed cases of COVID-19 around World ">
 <title>Covid19 Live Tracker</title>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=0.8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="website" />
+<meta property="fb:app_id" content="210702630194710" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description"
+	content=" Track COVID-19 around The World " />
+
 
 <link rel='icon' href='image/icon.png' type="image/png" sizes="16x16" />
 
@@ -25,6 +34,8 @@
 <!-- Google Fonts -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link href="https://fonts.googleapis.com/css?family=Cookie"
+	rel="stylesheet">
 
 <!-- Bootstrap core CSS -->
 <link
@@ -43,7 +54,8 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-
+<script type="text/javascript"
+	src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 <!-- DataTables CSS -->
 <link href="css/addons/datatables.min.css" rel="stylesheet">
@@ -83,6 +95,20 @@
 	overflow: hidden;
 	background-color: #c51162;
 }
+
+html, body {
+	height: 100%;
+}
+
+#page-content {
+	flex: 1 0 auto;
+}
+
+#sticky-footer {
+	flex-shrink: none;
+}
+
+/* Other Classes for Page Styling */
 </style>
 <script th:inline="javascript">
 var chart;
@@ -92,7 +118,7 @@ window.onload = function () {
 	 document.body.style.msTransform =          // IE 9
 	 document.body.style.transform = scale; */
 	 
-var pontos = /*[[${trackRecords}]]*/'default'
+var pontos = /*[[${trackRecords.globalDatas}]]*/'default'
 var data= pontos.find(ponto => ponto.country_region === 'India');
 var dates = pontos[0].timelineConfirmed;
 var confirmed=data.timelineConfirmed;
@@ -216,7 +242,7 @@ function updateCartType(id){
 
 function chartUpdate(id){
 	var nameArr = id.split(',');
-	var pontos = /*[[${trackRecords}]]*/'default'
+	var pontos = /*[[${trackRecords.globalDatas}]]*/'default'
 	var data;
 	
 	if(nameArr[1].length>0){
@@ -347,62 +373,173 @@ function chartUpdate(id){
 </script>
 </head>
 <body>
-	<div class="container" align="center">
-		<h1>Covid19 Live Tracker</h1>
-	</div>
-	<div class="table-responsive">
-		<table width="100%" border="0">
-			<tr>
-				<td width="30%)">
-					<div class="table-responsive" align="left" id="myGroup">
-						<table id="tracker" class="table table-dark table-sm  "
-							width="100%">
-							<thead>
-								<th class="th-sm">Country</th>
+	<div id="fb-root"></div>
+	<script async defer crossorigin="anonymous"
+		src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=210702630194710&autoLogAppEvents=1"></script>
+	<!-- Navigation -->
+	<nav
+		class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="http://covid19livetracker.online">Covid19
+				Live Tracker</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a class="nav-link"
+						href="http://covid19livetracker.online">Home <span
+							class="sr-only">(current)</span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile"
+						target="_blank">About</a></li>
 
-							</thead>
-							<tbody>
-								<tr th:each="trackRecord: ${trackRecords}">
-									<td>
+					<!-- <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Services</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#">Contact</a></li> -->
 
-										<button
-											th:id="${trackRecord.country_region+','+trackRecord.province_state}"
-											type="button" class="collapsible"
-											onclick="chartUpdate(this.id);" data-toggle="collapse"
-											th:attr="data-target='#'+${trackRecord.country_region+trackRecord.totalConfirmed}"
-											th:text="${trackRecord.country_region +' '+trackRecord.province_state}"></button>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-										<div
-											th:id="${trackRecord.country_region+trackRecord.totalConfirmed}"
-											class="collapse" data-parent="#myGroup">
-											<table>
-												<tr>
-													<td th:text="${'Cnformed-'+trackRecord.totalConfirmed}"
-														th:style="${trackRecord.totalConfirmed != 0 ? 'color: #c51162;' : 'color:  #c51162'}" />
-													<td th:text="${'Fatal-'+trackRecord.totalDeath}"
-														th:style="${trackRecord.totalDeath != 0 ? 'color: #ff4444;' : 'color: #ff4444'}" />
-													<td th:text="${'Recoverd-'+trackRecord.totalRecovered}"
-														th:style="${trackRecord.totalRecovered != 0 ? 'color: #007E33;' : 'color: #007E33'}" />
-												</tr>
-											</table>
-										</div>
-								</tr>
-							</tbody>
-						</table>
+	<div class="row mt-5"></div>
+	<div class="row mt-5"></div>
+	<div class="container-fluid table-responsive">
+		<div class="row">
+			<div class="col">
+				<div class="service_area gray_bg">
+					<div class="container">
+
+						<div class="row justify-content-center ">
+							<!-- <div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
+								<div class="single_service d-flex align-items-center bg-dark ">
+									<div class="service_info p-3 mb-2 bg-dark text-white ">
+										<h4>+142</h4>
+										<p>Today</p>
+									</div>
+								</div>
+							</div> -->
+							<div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
+								<div class="single_service d-flex align-items-center bg-info">
+									<div class="service_info p-3 mb-2 bg-info text-white">
+										<h4>
+											<span th:text="*{trackRecords.totalConfirmed}"></span>
+										</h4>
+										<p>World wide Infected</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
+								<div class="single_service d-flex align-items-center bg-success">
+									<div class="service_info p-3 mb-2 bg-success text-white">
+										<h4>
+											<span th:text="*{trackRecords.totalRecovered}"></span>
+										</h4>
+										<p>Total Recovered</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
+								<div class="single_service d-flex align-items-center bg-danger">
+									<div class="service_info p-3 mb-2 bg-danger text-white">
+										<h4>
+											<span th:text="*{trackRecords.totalDeaths}"></span>
+										</h4>
+										<p>Total Deaths</p>
+									</div>
+								</div>
+							</div>
+
+							<!--  <div class="col-12 text-center">
+								<span class="text-muted">Last Update: 01 Apr 2020, 6:28PM</span>
+							</div>  -->
+
+						</div>
+						<div class="row justify-content-center ">
+							<div class="col text-center">
+								<div class="fb-like"
+									data-href="http://covid19livetracker.online" data-width=""
+									data-layout="button_count" data-action="like" data-size="large"
+									data-share="true"></div>
+
+							</div>
+						</div>
 					</div>
-				</td>
-				<td width="70%" valign="top">
-					<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-					<div class="container" align="center"><button id="line" onClick="updateCartType(this.id);">Line Chart</button>&nbsp;&nbsp;<button id="column" onClick="updateCartType(this.id);">Column Chart</button></div>
-					
+				</div>
+			</div>
+		</div>
+		<div class="row"></div>
 
-				</td>
-			</tr>
+		<div class="row">
+			<div class="col">
+				<div class="container table-responsive" align="left" id="myGroup">
+					<table id="tracker" class="table table-dark table-sm">
+						<thead>
+							<th class="th-sm">Country</th>
+						</thead>
+						<tbody>
+							<tr th:each="trackRecord: ${trackRecords.globalDatas}">
+								<td>
 
-		</table>
+									<button
+										th:id="${trackRecord.country_region+','+trackRecord.province_state}"
+										type="button" class="collapsible"
+										onclick="chartUpdate(this.id);" data-toggle="collapse"
+										th:attr="data-target='#'+${trackRecord.country_region+trackRecord.totalConfirmed}"
+										th:text="${trackRecord.country_region +' '+trackRecord.province_state}"></button>
+
+									<div
+										th:id="${trackRecord.country_region+trackRecord.totalConfirmed}"
+										class="collapse container-fluid" data-parent="#myGroup">
+										<table>
+											<tr>
+												<td th:text="${'Cnformed-'+trackRecord.totalConfirmed}"
+													th:style="${trackRecord.totalConfirmed != 0 ? 'color: #c51162;' : 'color:  #c51162'}" />
+												<td th:text="${'Fatal-'+trackRecord.totalDeath}"
+													th:style="${trackRecord.totalDeath != 0 ? 'color: #ff4444;' : 'color: #ff4444'}" />
+												<td th:text="${'Recoverd-'+trackRecord.totalRecovered}"
+													th:style="${trackRecord.totalRecovered != 0 ? 'color: #007E33;' : 'color: #007E33'}" />
+											</tr>
+										</table>
+									</div>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-8">
+
+				<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+				<div align="center">
+					<div class="row mx-md-n5">
+						<div class="col px-md-5" align="right">
+							<button class="btn btn-dark" id="line"
+								onClick="updateCartType(this.id);">Line Chart</button>
+						</div>
+						<div class="col px-md-5" align="left">
+							<button class="btn btn-dark" id="column"
+								onClick="updateCartType(this.id);">Column Chart</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
 	</div>
-	
-	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+	<footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+		<div class="container text-center">
+			<small><a href="https://github.com/CSSEGISandData"
+				target="_blank">Data Source-GHU</a> </small> <small>Copyright &copy;
+				<a href="http://covid19livetracker.online">covid19livetracker.online</a></small>
+		</div>
+	</footer>
 
 
 </body>

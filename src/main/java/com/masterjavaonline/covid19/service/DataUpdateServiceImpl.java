@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.masterjavaonline.covid19.model.CsvData;
+import com.masterjavaonline.covid19.model.GlobalCovidData;
 import com.masterjavaonline.covid19.model.GlobalData;
 
 @Service
@@ -89,7 +89,7 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 	}
 
 	@Override
-	public List<GlobalData> getGlobalWHOData() {
+	public GlobalCovidData getGlobalWHOData() {
 		String directory = System.getProperty("user.home");
 		File fileConfirmed = new File(directory + File.separator + "time_series_covid19_confirmed_global.csv");
 		File fileDeaths = new File(directory + File.separator + "time_series_covid19_deaths_global.csv");
@@ -98,11 +98,36 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 		List<CsvData> loadConfirmed = loadData(fileConfirmed);
 		List<CsvData> loadDeaths = loadData(fileDeaths);
 		List<CsvData> loadRecovered = loadData(fileRecovered);
+		
+		GlobalCovidData globalCovidData=new GlobalCovidData();
 
+		int totalConfirmed = getRecordsTotal(loadConfirmed);
+		int totalDeaths = getRecordsTotal(loadDeaths);
+		int totalRecovered = getRecordsTotal(loadRecovered);
+
+		globalCovidData.setTotalConfirmed(totalConfirmed);
+		globalCovidData.setTotalDeaths(totalDeaths);
+		globalCovidData.setTotalRecovered(totalRecovered);
+		
+		
 		List<GlobalData> globalDatas = processData(loadConfirmed, loadDeaths, loadRecovered);
+		globalCovidData.setGlobalDatas(globalDatas);
+		
+		return globalCovidData;
 
-		return globalDatas;
+	}
 
+	private int getRecordsTotal(List<CsvData> loadConfirmed) {
+	
+		int total=0;
+
+		for( CsvData csvData: loadConfirmed ) {
+			
+			total=total+csvData.getTotal();
+			
+		}
+		
+		return total;
 	}
 
 	private List<GlobalData> processData(List<CsvData> loadConfirmed, List<CsvData> loadDeaths,
