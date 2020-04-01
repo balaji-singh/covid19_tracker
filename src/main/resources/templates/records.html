@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150662257-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-150662257-1');
+</script>
+
 <title>Covid19 Live Tracker</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=0.8">
@@ -95,6 +105,7 @@ var totalRecovered=recovered[recovered.length-1];
 
  chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
+	//animationDuration: 1000,
 	theme: "light2",
 	title:{
 		text: "India Covid19 Live Data"
@@ -126,7 +137,11 @@ var totalRecovered=recovered[recovered.length-1];
 		//itemclick: toogleDataSeries
 	},
 	data: [{
+		highlightEnabled: true,
 		type: "column",
+		//indexLabel: "{y}",
+        indexLabelPlacement: "outside",  
+        indexLabelOrientation: "horizontal",
 		yValueFormatString: "0",
 		axisYIndex: 0,
 		showInLegend: true,
@@ -138,6 +153,10 @@ var totalRecovered=recovered[recovered.length-1];
 	},
 	{
 		type: "column",
+		highlightEnabled: true,
+		//indexLabel: "{y}",
+        indexLabelPlacement: "outside",  
+        indexLabelOrientation: "horizontal",
 		yValueFormatString: "0",
 		axisYIndex: 0,
 		showInLegend: true,
@@ -149,6 +168,10 @@ var totalRecovered=recovered[recovered.length-1];
 	},
 	{
 		type: "column",
+		//indexLabel: "{y}",
+        indexLabelPlacement: "outside",  
+        highlightEnabled: true,
+        indexLabelOrientation: "horizontal",
 		yValueFormatString: "0",
 		axisYIndex: 0,
 		showInLegend: true,
@@ -378,7 +401,8 @@ function chartUpdate(id){
 
 		</table>
 	</div>
-	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 
 </body>
