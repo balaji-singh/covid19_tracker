@@ -75,6 +75,7 @@
 }
 </style>
 <script th:inline="javascript">
+var chart;
 window.onload = function () {
 	/* var scale = 'scale(0.7)';
 	 document.body.style.webkitTransform =       // Chrome, Opera, Safari
@@ -88,13 +89,19 @@ var confirmed=data.timelineConfirmed;
 var deaths=data.timelineDeath;
 var recovered=data.timelineRecovered;
 
-var chart = new CanvasJS.Chart("chartContainer", {
+var totalConfirmed=confirmed.pop();
+var totalDeths=deaths.pop();
+var totalRecovered=recovered.pop();
+
+ chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
 	theme: "light2",
 	title:{
 		text: "India Covid19 Live Data"
 	},
 	axisX:{
+		fontWeight: "bold",
+		title: "Confirmed:"+totalConfirmed+"    Fatal:"+totalDeths+ "   Recovered:"+totalRecovered,
 		valueFormatString: "DD/MM/YY",
 		crosshair: {
 			enabled: true,
@@ -119,7 +126,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		//itemclick: toogleDataSeries
 	},
 	data: [{
-		type: "spline",
+		type: "column",
 		yValueFormatString: "0",
 		axisYIndex: 0,
 		showInLegend: true,
@@ -130,7 +137,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		dataPoints: []
 	},
 	{
-		type: "spline",
+		type: "column",
 		yValueFormatString: "0",
 		axisYIndex: 0,
 		showInLegend: true,
@@ -141,7 +148,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		dataPoints: []
 	},
 	{
-		type: "spline",
+		type: "column",
 		yValueFormatString: "0",
 		axisYIndex: 0,
 		showInLegend: true,
@@ -160,6 +167,7 @@ function myFunction(value, index, array) {
 	chart.options.data[1].dataPoints.push({ x: xValue, y: parseInt(deaths[index])});
 	chart.options.data[2].dataPoints.push({ x: xValue, y: parseInt(recovered[index])});
 	
+	
 }
 chart.render();
 
@@ -175,6 +183,13 @@ chart.render();
 
 }
 
+function updateCartType(id){
+	chart.options.data[0].type=id;
+	chart.options.data[1].type=id;
+	chart.options.data[2].type=id;
+	chart.render();
+	
+}
 
 function chartUpdate(id){
 	var nameArr = id.split(',');
@@ -193,14 +208,19 @@ function chartUpdate(id){
 	var confirmed=data.timelineConfirmed;
 	var deaths=data.timelineDeath;
 	var recovered=data.timelineRecovered;
-
-	var chart = new CanvasJS.Chart("chartContainer", {
+	var totalConfirmed=confirmed.pop();
+	var totalDeths=deaths.pop();
+	var totalRecovered=recovered.pop();
+	
+	 chart = new CanvasJS.Chart("chartContainer", {
 		animationEnabled: true,
 		theme: "light2",
 		title:{
 			text: "India Covid19 Live Data"
 		},
 		axisX:{
+			fontWeight: "bold",
+			title: "Confirmed:"+totalConfirmed+"    Fatal:"+totalDeths+ "   Recovered:"+totalRecovered,
 			valueFormatString: "DD/MM/YY",
 			crosshair: {
 				enabled: true,
@@ -225,7 +245,7 @@ function chartUpdate(id){
 			//itemclick: toogleDataSeries
 		},
 		data: [{
-			type: "spline",
+			type: "column",
 			yValueFormatString: "0",
 			axisYIndex: 0,
 			showInLegend: true,
@@ -236,7 +256,7 @@ function chartUpdate(id){
 			dataPoints: []
 		},
 		{
-			type: "spline",
+			type: "column",
 			yValueFormatString: "0",
 			axisYIndex: 0,
 			showInLegend: true,
@@ -247,7 +267,7 @@ function chartUpdate(id){
 			dataPoints: []
 		},
 		{
-			type: "spline",
+			type: "column",
 			yValueFormatString: "0",
 			axisYIndex: 0,
 			showInLegend: true,
@@ -350,6 +370,8 @@ function chartUpdate(id){
 				</td>
 				<td width="70%" valign="top">
 					<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+					<div class="container" align="center"><button id="line" onClick="updateCartType(this.id);">Line Chart</button>&nbsp;&nbsp;<button id="column" onClick="updateCartType(this.id);">Column Chart</button></div>
+					
 
 				</td>
 			</tr>
