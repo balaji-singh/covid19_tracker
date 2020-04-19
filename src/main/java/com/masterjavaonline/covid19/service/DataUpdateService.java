@@ -1,5 +1,6 @@
 package com.masterjavaonline.covid19.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.masterjavaonline.covid19.model.GlobalCovidData;
@@ -9,6 +10,6 @@ public interface DataUpdateService {
 
 	String updateGlobalWHOData() throws Exception;
 
-	GlobalCovidData getGlobalWHOData();
+	GlobalCovidData getGlobalWHOData() throws IOException, InterruptedException;
 
 }
