@@ -7,12 +7,19 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
+import java.net.URI;
 import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Service;
 
 import com.masterjavaonline.covid19.model.CsvData;
@@ -22,20 +29,13 @@ import com.masterjavaonline.covid19.model.GlobalData;
 @Service
 public class DataUpdateServiceImpl implements DataUpdateService {
 
-	@Value("${url.confirmed}")
-	private String confirmed;
-	@Value("${url.deaths}")
-	private String deaths;
-	@Value("${url.recovered}")
-	private String recovered;
+	private String directory = System.getProperty("user.home");
+	private String confirmedUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
+	private String deathsUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
+	private String recoveredUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv";
 
 	@Override
 	public String updateGlobalWHOData() throws Exception {
-
-		String directory = System.getProperty("user.home");
-		String confirmedUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
-		String deathsUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
-		String recoveredUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv";
 
 		URL urlConfirmed = new URL(confirmedUrl);
 		URL urlDeaths = new URL(deathsUrl);
@@ -81,7 +81,6 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 			input.close();
 			output.close();
 
-			System.out.println("File '" + file.getAbsolutePath() + "' downloaded successfully!");
 		} catch (IOException ioEx) {
 			ioEx.printStackTrace();
 		}
@@ -89,7 +88,7 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 	}
 
 	@Override
-	public GlobalCovidData getGlobalWHOData() {
+	public GlobalCovidData getGlobalWHOData() throws IOException, InterruptedException {
 		String directory = System.getProperty("user.home");
 		File fileConfirmed = new File(directory + File.separator + "time_series_covid19_confirmed_global.csv");
 		File fileDeaths = new File(directory + File.separator + "time_series_covid19_deaths_global.csv");
@@ -98,35 +97,36 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 		List<CsvData> loadConfirmed = loadData(fileConfirmed);
 		List<CsvData> loadDeaths = loadData(fileDeaths);
 		List<CsvData> loadRecovered = loadData(fileRecovered);
+
+		GlobalCovidData globalCovidData = new GlobalCovidData();
+
+		int totalConfirmed = loadConfirmed.stream().mapToInt(tot-> tot.getTotal()).sum(); //getRecordsTotal(loadConfirmed);
+		int totalDeaths = loadDeaths.stream().mapToInt(tot-> tot.getTotal()).sum(); //getRecordsTotal(loadDeaths);
+		int totalRecovered = loadRecovered.stream().mapToInt(tot-> tot.getTotal()).sum(); //getRecordsTotal(loadRecovered);
+		int totalActiveCases=totalConfirmed-totalDeaths-totalRecovered;
 		
-		GlobalCovidData globalCovidData=new GlobalCovidData();
-
-		int totalConfirmed = getRecordsTotal(loadConfirmed);
-		int totalDeaths = getRecordsTotal(loadDeaths);
-		int totalRecovered = getRecordsTotal(loadRecovered);
-
+		globalCovidData.setTotalActive(totalActiveCases);
 		globalCovidData.setTotalConfirmed(totalConfirmed);
 		globalCovidData.setTotalDeaths(totalDeaths);
 		globalCovidData.setTotalRecovered(totalRecovered);
-		
-		
+
 		List<GlobalData> globalDatas = processData(loadConfirmed, loadDeaths, loadRecovered);
 		globalCovidData.setGlobalDatas(globalDatas);
-		
+
 		return globalCovidData;
 
 	}
 
 	private int getRecordsTotal(List<CsvData> loadConfirmed) {
-	
-		int total=0;
 
-		for( CsvData csvData: loadConfirmed ) {
-			
-			total=total+csvData.getTotal();
-			
+		int total = 0;
+
+		for (CsvData csvData : loadConfirmed) {
+
+			total = total + csvData.getTotal();
+
 		}
-		
+
 		return total;
 	}
 
@@ -186,58 +186,33 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 
 	}
 
-	private List<CsvData> loadData(File file) {
+	private List<CsvData> loadData(File file) throws IOException, InterruptedException {
 
-		BufferedReader br = null;
-		String line = "";
-		String cvsSplitBy = ",";
 		List<CsvData> csvDatas = new ArrayList<CsvData>();
+		Reader csvDataReader = new FileReader(file);
+		Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(csvDataReader);
 
-		try {
-			int counter = 0;
-			br = new BufferedReader(new FileReader(file));
-
-			while ((line = br.readLine()) != null) {
-				if (line.contains("Korea, South")) {
-					line = line.replace("\"Korea, South\"", "Korea-South");
-				}
-				CsvData csvData = new CsvData();
-				String[] csvFileData = line.split(cvsSplitBy);
-				System.out.println("\n");
-
-				csvData.setProvince_state(csvFileData[0]);
-				csvData.setCountry_region(csvFileData[1]);
-				csvData.setLatitude(csvFileData[2]);
-				csvData.setLongtude(csvFileData[3]);
-
-				List<String> timeline = new ArrayList<String>();
-				for (int i = 4; i < csvFileData.length; i++) {
-
-					timeline.add(csvFileData[i]);
-				}
-				if (counter > 0) {
-					csvData.setTotal(Integer.parseInt(timeline.get(timeline.size() - 1)));
-				}
-
-				csvData.setTimeline(timeline);
-				csvDatas.add(csvData);
-				counter++;
-
+		for (CSVRecord record : records) {
+			CsvData csvData = new CsvData();
+			String country=record.get(1).replaceAll("\\s+", "_");
+			csvData.setProvince_state(record.get(0));
+			csvData.setCountry_region(country);
+			try {
+				csvData.setTotal(Integer.parseInt(record.get(record.size() - 1)));
+			} catch (Exception ex) {
 			}
+			csvData.setLatitude(record.get(2));
+			csvData.setLongtude(record.get(3));
+			List<String> timeline = new ArrayList<String>();
+			for (int i = 4; i < record.size(); i++) {
 
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				timeline.add(record.get(i));
 			}
+			csvData.setTimeline(timeline);
+			csvDatas.add(csvData);
+
 		}
+
 		return csvDatas;
 	}
 

@@ -14,6 +14,7 @@ public class GlobalCovidData {
 	private int totalConfirmed ;
 	private int totalDeaths;
 	private int totalRecovered ;
+	private int totalActive;
 	
 	private List<GlobalData> globalDatas ;
 
@@ -49,10 +50,19 @@ public class GlobalCovidData {
 		this.globalDatas = globalDatas;
 	}
 
+	public int getTotalActive() {
+		return totalActive;
+	}
+
+	public void setTotalActive(int totalActive) {
+		this.totalActive = totalActive;
+	}
+
 	@Override
 	public String toString() {
 		return "GlobalCovidData [totalConfirmed=" + totalConfirmed + ", totalDeaths=" + totalDeaths
-				+ ", totalRecovered=" + totalRecovered + ", globalDatas=" + globalDatas + "]";
+				+ ", totalRecovered=" + totalRecovered + ", totalActive=" + totalActive + ", globalDatas=" + globalDatas
+				+ "]";
 	}
 	
 	
