@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+
 <script data-ad-client="ca-pub-4553485077018114" async
 	src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+
+<script async custom-element="amp-ad"
+	src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
+
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async
@@ -80,7 +86,7 @@
 	background-color: #ef5350;
 	color: white;
 	cursor: pointer;
-	padding: 18px;
+	padding: 10px;
 	width: 100%;
 	border: none;
 	text-align: left;
@@ -258,14 +264,16 @@ function chartUpdate(id){
 	var recovered=data.timelineRecovered;
 	var totalConfirmed=confirmed[confirmed.length-1];
 	var totalDeths=deaths[deaths.length-1];
+					
+	  
 	var totalRecovered;
 	try {
 		 totalRecovered=recovered[recovered.length-1];
 	}
 	catch(err) {
 		 totalRecovered=0;
-	}
-	
+	}	 		
+  
 	
 	 chart = new CanvasJS.Chart("chartContainer", {
 		animationEnabled: true,
@@ -387,8 +395,7 @@ function chartUpdate(id){
 		class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
 		<div class="container">
 			<a class="navbar-brand" href="/"><img alt="Covid19
-				Live Tracker" src="image/icon.png" width="40">Covid19
-				Live Tracker</a>
+				Live Tracker" src="image/icon.png" width="40">Covid19 Live Tracker</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -396,9 +403,8 @@ function chartUpdate(id){
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link"
-						href="/">Home <span
-							class="sr-only">(current)</span>
+					<li class="nav-item active"><a class="nav-link" href="/">Home
+							<span class="sr-only">(current)</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile"
@@ -424,6 +430,7 @@ function chartUpdate(id){
 
 						<div class="row justify-content-center ">
 
+
 							<div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
 								<div class="single_service d-flex align-items-center bg-primary">
 									<div class="service_info p-3 mb-2 bg-primary text-white">
@@ -440,10 +447,11 @@ function chartUpdate(id){
 										<h4>
 											<span th:text="*{trackRecords.totalActive}"></span>
 										</h4>
-										<p>Total Active</p>
+										<p>World wide Infected</p>
 									</div>
 								</div>
 							</div>
+
 							<div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
 								<div class="single_service d-flex align-items-center bg-success">
 									<div class="service_info p-3 mb-2 bg-success text-white">
@@ -517,28 +525,64 @@ function chartUpdate(id){
 											</tr>
 										</table>
 									</div>
+								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
-			<div class="col-8">
+			<div class="col">
 
-				<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-				<div align="center">
-					<div class="row mx-md-n5">
-						<div class="col px-md-5" align="right">
-							<button class="btn btn-dark" id="line"
-								onClick="updateCartType(this.id);">Line Chart</button>
+				<div class="container-fluid table-responsive">
+
+					<div class="row">
+						<div class="col">
+							<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
 						</div>
-						<div class="col px-md-5" align="left">
-							<button class="btn btn-dark" id="column"
-								onClick="updateCartType(this.id);">Column Chart</button>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div align="center">
+								<div class="row mx-md-n5">
+									<div class="col px-md-5" align="right">
+										<button class="btn btn-dark" id="line"
+											onClick="updateCartType(this.id);">Line</button>
+									</div>
+									<div class="col px-md-5" align="left">
+										<button class="btn btn-dark" id="column"
+											onClick="updateCartType(this.id);">Column</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div align="center">
+								<amp-ad width="100vw" height="320" type="adsense"
+									data-ad-client="ca-pub-4553485077018114"
+									data-ad-slot="8342311999" data-auto-format="rspv"
+									data-full-width="">
+								<div overflow=""></div>
+								</amp-ad>
+							</div>
+							<div align="center">
+								<script async
+									src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+								<ins class="adsbygoogle"
+									style="display: block; text-align: center;"
+									data-ad-layout="in-article" data-ad-format="fluid"
+									data-ad-client="ca-pub-4553485077018114"
+									data-ad-slot="1871244745"></ins>
+								<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
+
+			</div>
 		</div>
 	</div>
 
