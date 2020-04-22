@@ -152,10 +152,12 @@ var totalRecovered=recovered[recovered.length-1];
 	title:{
 		text: "India Covid19 Live Data"
 	},
+	dataPointWidth: 6,
 	axisX:{
 		fontWeight: "bold",
 		title: "Confirmed:"+totalConfirmed+"    Fatal:"+totalDeths+ "   Recovered:"+totalRecovered,
 		valueFormatString: "DD/MM/YY",
+		tickLength: 10,
 		crosshair: {
 			enabled: true,
 			snapToDataPoint: true
@@ -292,10 +294,12 @@ function chartUpdate(id){
 		title:{
 			text: "India Covid19 Live Data"
 		},
+		dataPointWidth: 5,
 		axisX:{
 			fontWeight: "bold",
 			title: "Confirmed:"+totalConfirmed+"    Fatal:"+totalDeths+ "   Recovered:"+totalRecovered,
 			valueFormatString: "DD/MM/YY",
+			tickLength: 10,
 			crosshair: {
 				enabled: true,
 				snapToDataPoint: true
@@ -446,7 +450,7 @@ function chartUpdate(id){
 								<div class="single_service d-flex align-items-center bg-primary">
 									<div class="service_info p-3 mb-2 bg-primary text-white">
 										<h4>
-											<span th:text="*{trackRecords.totalConfirmed}"></span>
+											<span th:text="*{#numbers.formatInteger(trackRecords.totalConfirmed,3,'COMMA')}"></span>
 										</h4>
 										<p>Global Infected</p>
 									</div>
@@ -456,7 +460,7 @@ function chartUpdate(id){
 								<div class="single_service d-flex align-items-center bg-info">
 									<div class="service_info p-3 mb-2 bg-info text-white">
 										<h4>
-											<span th:text="*{trackRecords.totalActive}"></span>
+											<span th:text="*{#numbers.formatInteger(trackRecords.totalActive,3,'COMMA')}"></span>
 										</h4>
 										<p>World wide Infected</p>
 									</div>
@@ -467,7 +471,7 @@ function chartUpdate(id){
 								<div class="single_service d-flex align-items-center bg-success">
 									<div class="service_info p-3 mb-2 bg-success text-white">
 										<h4>
-											<span th:text="*{trackRecords.totalRecovered}"></span>
+											<span th:text="*{#numbers.formatInteger(trackRecords.totalRecovered,3,'COMMA')}"></span>
 										</h4>
 										<p>Total Recovered</p>
 									</div>
@@ -477,9 +481,9 @@ function chartUpdate(id){
 								<div class="single_service d-flex align-items-center bg-danger">
 									<div class="service_info p-3 mb-2 bg-danger text-white">
 										<h4>
-											<span th:text="*{trackRecords.totalDeaths}"></span>
+											<span th:text="*{#numbers.formatInteger(trackRecords.totalDeaths,3,'COMMA')}"></span>
 										</h4>
-										<p>Total Deaths</p>
+										<p>Total Fatal Cases</p>
 									</div>
 								</div>
 							</div>
@@ -507,8 +511,8 @@ function chartUpdate(id){
 		<div class="row">
 			<div class="col">
 				<div class="container table-responsive" align="left" id="myGroup">
-					<table id="tracker" class="table table-dark table-sm">
-						<thead>
+					<table id="tracker" class="table table-hover  table-sm">
+						<thead class="thead-dark">
 							<th class="th-sm">Country</th>
 						</thead>
 						<tbody>
@@ -529,11 +533,11 @@ function chartUpdate(id){
 										class="collapse container-fluid" data-parent="#myGroup">
 										<table>
 											<tr>
-												<td th:text="${'Cnformed-'+trackRecord.totalConfirmed}"
+												<td th:text="${'Cnformed-'+#numbers.formatInteger(trackRecord.totalConfirmed,3,'COMMA')}"
 													th:style="${trackRecord.totalConfirmed != 0 ? 'color: #c51162;' : 'color:  #c51162'}" />
-												<td th:text="${'Fatal-'+trackRecord.totalDeath}"
+												<td th:text="${'Fatal-'+#numbers.formatInteger(trackRecord.totalDeath,3,'COMMA')}"
 													th:style="${trackRecord.totalDeath != 0 ? 'color: #ff4444;' : 'color: #ff4444'}" />
-												<td th:text="${'Recoverd-'+trackRecord.totalRecovered}"
+												<td th:text="${'Recoverd-'+#numbers.formatInteger(trackRecord.totalRecovered,3,'COMMA')}"
 													th:style="${trackRecord.totalRecovered != 0 ? 'color: #007E33;' : 'color: #007E33'}" />
 											</tr>
 										</table>
