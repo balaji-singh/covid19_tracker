@@ -75,12 +75,23 @@
 <link href="css/addons/datatables-select.min.css" rel="stylesheet">
 <!-- DataTables Select JS -->
 <script src="js/addons/datatables-select.min.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#tracker').DataTable();
+		$('#tracker').DataTable({
+		      "pageLength": 10,
+		      "paging": true,
+		      "lengthChange": true,
+		      "searching": true,
+		      "ordering": false,
+		      "info": true,
+		      "autoWidth": false
+		      });
 		$('.dataTables_length').addClass('bs-select');
 	});
 </script>
+
+
 <style>
 .collapsible {
 	background-color: #ef5350;
@@ -501,7 +512,9 @@ function chartUpdate(id){
 							<th class="th-sm">Country</th>
 						</thead>
 						<tbody>
-							<tr th:each="trackRecord: ${trackRecords.globalDatas}">
+							<tr th:each="i : ${#numbers.sequence(trackRecords.globalDatas.size() - 1, 0, -1)}"  th:with="trackRecord=${#lists.sort(trackRecords.globalDatas)[i]}"> 
+							<!-- th:each="trackRecord: ${#lists.sort(trackRecords.globalDatas)}"> -->
+							<!-- ${#lists.sort(myList, reverse)} -->
 								<td>
 
 									<button
