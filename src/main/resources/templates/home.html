@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-<script data-ad-client="ca-pub-9495555182377598" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script data-ad-client="ca-pub-9495555182377598" async
+	src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
 
 <script async custom-element="amp-ad"
@@ -408,8 +409,10 @@ function chartUpdate(id){
 	<nav
 		class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="/"><img alt="Covid19
-				Live Tracker" src="image/icon.png" width="40">Covid19 Live Tracker</a>
+			<a class="navbar-brand" href="/"><img
+				alt="Covid19
+				Live Tracker" src="image/icon.png" width="40">Covid19
+				Live Tracker</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -449,7 +452,8 @@ function chartUpdate(id){
 								<div class="single_service d-flex align-items-center bg-primary">
 									<div class="service_info p-3 mb-2 bg-primary text-white">
 										<h4>
-											<span th:text="*{#numbers.formatInteger(trackRecords.totalConfirmed,3,'COMMA')}"></span>
+											<span
+												th:text="*{#numbers.formatInteger(trackRecords.totalConfirmed,3,'COMMA')}"></span>
 										</h4>
 										<p>Total Infected</p>
 									</div>
@@ -459,7 +463,8 @@ function chartUpdate(id){
 								<div class="single_service d-flex align-items-center bg-info">
 									<div class="service_info p-3 mb-2 bg-info text-white">
 										<h4>
-											<span th:text="*{#numbers.formatInteger(trackRecords.totalActive,3,'COMMA')}"></span>
+											<span
+												th:text="*{#numbers.formatInteger(trackRecords.totalActive,3,'COMMA')}"></span>
 										</h4>
 										<p>Total Active</p>
 									</div>
@@ -470,7 +475,8 @@ function chartUpdate(id){
 								<div class="single_service d-flex align-items-center bg-success">
 									<div class="service_info p-3 mb-2 bg-success text-white">
 										<h4>
-											<span th:text="*{#numbers.formatInteger(trackRecords.totalRecovered,3,'COMMA')}"></span>
+											<span
+												th:text="*{#numbers.formatInteger(trackRecords.totalRecovered,3,'COMMA')}"></span>
 										</h4>
 										<p>Total Recovered</p>
 									</div>
@@ -480,9 +486,10 @@ function chartUpdate(id){
 								<div class="single_service d-flex align-items-center bg-danger">
 									<div class="service_info p-3 mb-2 bg-danger text-white">
 										<h4>
-											<span th:text="*{#numbers.formatInteger(trackRecords.totalDeaths,3,'COMMA')}"></span>
+											<span
+												th:text="*{#numbers.formatInteger(trackRecords.totalDeaths,3,'COMMA')}"></span>
 										</h4>
-										<p>Total Fatal </p>
+										<p>Total Fatal cases</p>
 									</div>
 								</div>
 							</div>
@@ -515,9 +522,11 @@ function chartUpdate(id){
 							<th class="th-sm">Country</th>
 						</thead>
 						<tbody>
-							<tr th:each="i : ${#numbers.sequence(trackRecords.globalDatas.size() - 1, 0, -1)}"  th:with="trackRecord=${#lists.sort(trackRecords.globalDatas)[i]}"> 
-							<!-- th:each="trackRecord: ${#lists.sort(trackRecords.globalDatas)}"> -->
-							<!-- ${#lists.sort(myList, reverse)} -->
+							<tr
+								th:each="i : ${#numbers.sequence(trackRecords.globalDatas.size() - 1, 0, -1)}"
+								th:with="trackRecord=${#lists.sort(trackRecords.globalDatas)[i]}">
+								<!-- th:each="trackRecord: ${#lists.sort(trackRecords.globalDatas)}"> -->
+								<!-- ${#lists.sort(myList, reverse)} -->
 								<td>
 
 									<button
@@ -532,11 +541,14 @@ function chartUpdate(id){
 										class="collapse container-fluid" data-parent="#myGroup">
 										<table>
 											<tr>
-												<td th:text="${'Cnformed-'+#numbers.formatInteger(trackRecord.totalConfirmed,3,'COMMA')}"
+												<td
+													th:text="${'Cnformed-'+#numbers.formatInteger(trackRecord.totalConfirmed,3,'COMMA')}"
 													th:style="${trackRecord.totalConfirmed != 0 ? 'color: #c51162;' : 'color:  #c51162'}" />
-												<td th:text="${'Fatal-'+#numbers.formatInteger(trackRecord.totalDeath,3,'COMMA')}"
+												<td
+													th:text="${'Fatal-'+#numbers.formatInteger(trackRecord.totalDeath,3,'COMMA')}"
 													th:style="${trackRecord.totalDeath != 0 ? 'color: #ff4444;' : 'color: #ff4444'}" />
-												<td th:text="${'Recoverd-'+#numbers.formatInteger(trackRecord.totalRecovered,3,'COMMA')}"
+												<td
+													th:text="${'Recoverd-'+#numbers.formatInteger(trackRecord.totalRecovered,3,'COMMA')}"
 													th:style="${trackRecord.totalRecovered != 0 ? 'color: #007E33;' : 'color: #007E33'}" />
 											</tr>
 										</table>
@@ -575,22 +587,15 @@ function chartUpdate(id){
 					</div>
 					<div class="row">
 						<div class="col">
-							<div align="center">
-								<amp-ad width="100vw" height="320" type="adsense"
-									data-ad-client="ca-pub-4553485077018114"
-									data-ad-slot="8342311999" data-auto-format="rspv"
-									data-full-width="">
-								<div overflow=""></div>
-								</amp-ad>
-							</div>
+							
 							<div align="center">
 								<script async
 									src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-								<ins class="adsbygoogle"
-									style="display: block; text-align: center;"
-									data-ad-layout="in-article" data-ad-format="fluid"
-									data-ad-client="ca-pub-4553485077018114"
-									data-ad-slot="1871244745"></ins>
+								<!-- covid19-link -->
+								<ins class="adsbygoogle" style="display: block"
+									data-ad-client="ca-pub-9495555182377598"
+									data-ad-slot="7973045249" data-ad-format="link"
+									data-full-width-responsive="true"></ins>
 								<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 							</div>
 						</div>
