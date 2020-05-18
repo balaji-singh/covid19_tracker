@@ -10,13 +10,25 @@ import java.util.List;
  *
  */
 public class GlobalCovidData {
-	
-	private int totalConfirmed ;
+
+	private int totalConfirmed;
 	private int totalDeaths;
-	private int totalRecovered ;
+	private int totalRecovered;
 	private int totalActive;
+
+	private List<GlobalData> globalDatas;
+
+	private NewsData newsData;
 	
-	private List<GlobalData> globalDatas ;
+	
+
+	public NewsData getNewsData() {
+		return newsData;
+	}
+
+	public void setNewsData(NewsData newsData) {
+		this.newsData = newsData;
+	}
 
 	public int getTotalConfirmed() {
 		return totalConfirmed;
@@ -64,7 +76,5 @@ public class GlobalCovidData {
 				+ ", totalRecovered=" + totalRecovered + ", totalActive=" + totalActive + ", globalDatas=" + globalDatas
 				+ "]";
 	}
-	
-	
 
 }

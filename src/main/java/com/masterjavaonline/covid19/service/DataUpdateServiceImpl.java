@@ -20,11 +20,13 @@ import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masterjavaonline.covid19.model.CsvData;
 import com.masterjavaonline.covid19.model.GlobalCovidData;
 import com.masterjavaonline.covid19.model.GlobalData;
+import com.masterjavaonline.covid19.model.NewsData;
 
 @Service
 public class DataUpdateServiceImpl implements DataUpdateService {
@@ -34,6 +36,9 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 	private String deathsUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
 	private String recoveredUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv";
 
+	@Autowired
+	private NewsDataServiceImpl newsDataServiceImpl;
+	
 	@Override
 	public String updateGlobalWHOData() throws Exception {
 
@@ -50,7 +55,7 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 		updateURLToFile(urlDeaths, fileDeaths);
 		updateURLToFile(urlRecovered, fileRecovered);
 
-		return null;
+		return "Success";
 
 	}
 
@@ -113,6 +118,9 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 		List<GlobalData> globalDatas = processData(loadConfirmed, loadDeaths, loadRecovered);
 		globalCovidData.setGlobalDatas(globalDatas);
 
+		NewsData newsData=newsDataServiceImpl.readNews();
+		globalCovidData.setNewsData(newsData);
+		
 		return globalCovidData;
 
 	}

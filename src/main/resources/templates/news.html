@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<script data-ad-client="ca-pub-9495555182377598" async
+	src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script type="text/javascript">
+	window._mNHandle = window._mNHandle || {};
+	window._mNHandle.queue = window._mNHandle.queue || [];
+	medianet_versionId = "3121199";
+</script>
+<script src="https://contextual.media.net/dmedianet.js?cid=8CUW65OLF"
+	async="async"></script>
+
+<script async custom-element="amp-ad"
+	src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async
+	src="https://www.googletagmanager.com/gtag/js?id=UA-150662257-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag('js', new Date());
+
+	gtag('config', 'UA-150662257-1');
+</script>
+<meta name="description"
+	content=" Track confirmed cases of COVID-19 around World ">
+<title>Covid19 Live Tracker</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="website" />
+<meta property="fb:app_id" content="210702630194710" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description"
+	content=" Track COVID-19 around The World " />
+
+
+<link rel='icon' href='image/icon.png' type="image/png" sizes="16x16" />
+
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+<!-- Google Fonts -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link href="https://fonts.googleapis.com/css?family=Cookie"
+	rel="stylesheet">
+
+<!-- Bootstrap core CSS -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<!-- JQuery -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Bootstrap tooltips -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<script type="text/javascript"
+	src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<!-- DataTables CSS -->
+<link href="css/addons/datatables.min.css" rel="stylesheet">
+<!-- DataTables JS -->
+<script src="js/addons/datatables.min.js" type="text/javascript"></script>
+
+<!-- DataTables Select CSS -->
+<link href="css/addons/datatables-select.min.css" rel="stylesheet">
+<!-- DataTables Select JS -->
+<script src="js/addons/datatables-select.min.js" type="text/javascript"></script>
+
+<style type="text/css">
+</style>
+<link rel="stylesheet" type="text/css" href="css/news.css">
+</head>
+<body>
+	<div id="fb-root"></div>
+	<script async defer crossorigin="anonymous"
+		src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=210702630194710&autoLogAppEvents=1"></script>
+	<!-- Navigation -->
+	<nav
+		class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="/"><img
+				alt="Covid19
+				Live Tracker" src="image/icon.png" width="40">Covid19
+				Live Tracker</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link" href="/">Home </a></li>
+					<li class="nav-item active"><a class="nav-link" href="/news">News<span
+							class="sr-only">(current)</span></a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="https://www.linkedin.com/in/bala-singh-atmakur/"
+						target="_blank">About</a></li>
+
+
+
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="row mt-5"></div>
+	<div class="row mt-5">
+		<div class="container">
+			<table class="table table-striped" border="0" width="50%">
+				<tr>
+					<th>News</th>
+				</tr>
+				<tr th:each="article: ${newsData.articles}">
+
+					<td>
+
+						<div class="col-md-10 blogShort">
+							<h1>
+								<span th:text="${article.title}"></span>
+							</h1>
+							<img th:src="${article.urlToImage}" alt="post img"
+								class="pull-left img-responsive thumb margin10 img-thumbnail">
+
+							<article>
+								<p>
+									<span th:text="${article.description}"></span>
+								</p>
+							</article>
+							<a class="btn btn-blog pull-right marginBottom10"
+								th:href="${article.url}" target="_blank">READ MORE</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+	</div>
+
+
+</body>
+</html>
