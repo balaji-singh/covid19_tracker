@@ -30,7 +30,6 @@ public class NewsAPIController {
 	public ModelAndView getNewsModel(ModelAndView modelAndView) throws Exception {
 
 		NewsData newsData = newsDataServiceImpl.readNews();
-		System.out.println(newsData.getTotalResults());
 		modelAndView.addObject("newsData", newsData);
 		modelAndView.setViewName("news");
 		return modelAndView;
