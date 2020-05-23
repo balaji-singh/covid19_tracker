@@ -1,25 +1,20 @@
 package com.masterjavaonline.covid19.service;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.io.StringReader;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +26,7 @@ import com.masterjavaonline.covid19.model.NewsData;
 @Service
 public class DataUpdateServiceImpl implements DataUpdateService {
 
+	private static final Logger logger = LoggerFactory.getLogger(DataUpdateServiceImpl.class);
 	private String directory = System.getProperty("user.home");
 	private String confirmedUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
 	private String deathsUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
@@ -38,9 +34,11 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 
 	@Autowired
 	private NewsDataServiceImpl newsDataServiceImpl;
-	
+
 	@Override
 	public String updateGlobalWHOData() throws Exception {
+
+		logger.info("updateGlobalWHOData");
 
 		URL urlConfirmed = new URL(confirmedUrl);
 		URL urlDeaths = new URL(deathsUrl);
@@ -60,6 +58,8 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 	}
 
 	private void updateURLToFile(URL url, File file) {
+		logger.info("updateURLToFile");
+
 		try {
 			InputStream input = url.openStream();
 			if (file.exists()) {
@@ -94,6 +94,7 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 
 	@Override
 	public GlobalCovidData getGlobalWHOData() throws IOException, InterruptedException {
+		logger.info("getGlobalWHOData");
 		String directory = System.getProperty("user.home");
 		File fileConfirmed = new File(directory + File.separator + "time_series_covid19_confirmed_global.csv");
 		File fileDeaths = new File(directory + File.separator + "time_series_covid19_deaths_global.csv");
@@ -105,11 +106,11 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 
 		GlobalCovidData globalCovidData = new GlobalCovidData();
 
-		int totalConfirmed = loadConfirmed.stream().mapToInt(tot-> tot.getTotal()).sum(); //getRecordsTotal(loadConfirmed);
-		int totalDeaths = loadDeaths.stream().mapToInt(tot-> tot.getTotal()).sum(); //getRecordsTotal(loadDeaths);
-		int totalRecovered = loadRecovered.stream().mapToInt(tot-> tot.getTotal()).sum(); //getRecordsTotal(loadRecovered);
-		int totalActiveCases=totalConfirmed-totalDeaths-totalRecovered;
-		
+		int totalConfirmed = loadConfirmed.stream().mapToInt(tot -> tot.getTotal()).sum(); // getRecordsTotal(loadConfirmed);
+		int totalDeaths = loadDeaths.stream().mapToInt(tot -> tot.getTotal()).sum(); // getRecordsTotal(loadDeaths);
+		int totalRecovered = loadRecovered.stream().mapToInt(tot -> tot.getTotal()).sum(); // getRecordsTotal(loadRecovered);
+		int totalActiveCases = totalConfirmed - totalDeaths - totalRecovered;
+
 		globalCovidData.setTotalActive(totalActiveCases);
 		globalCovidData.setTotalConfirmed(totalConfirmed);
 		globalCovidData.setTotalDeaths(totalDeaths);
@@ -118,15 +119,16 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 		List<GlobalData> globalDatas = processData(loadConfirmed, loadDeaths, loadRecovered);
 		globalCovidData.setGlobalDatas(globalDatas);
 
-		NewsData newsData=newsDataServiceImpl.readNews();
+		NewsData newsData = newsDataServiceImpl.readNews();
 		globalCovidData.setNewsData(newsData);
-		
+
 		return globalCovidData;
 
 	}
 
 	private int getRecordsTotal(List<CsvData> loadConfirmed) {
 
+		logger.info("getRecordsTotal");
 		int total = 0;
 
 		for (CsvData csvData : loadConfirmed) {
@@ -140,6 +142,7 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 
 	private List<GlobalData> processData(List<CsvData> loadConfirmed, List<CsvData> loadDeaths,
 			List<CsvData> loadRecovered) {
+		logger.info("processData");
 
 		Iterator<CsvData> i1 = loadConfirmed.iterator();
 
@@ -165,6 +168,7 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 	}
 
 	private void findRecovered(GlobalData globalData, List<CsvData> loadRecovered) {
+		logger.info("findRecovered");
 		Iterator<CsvData> i3 = loadRecovered.iterator();
 		while (i3.hasNext()) {
 			CsvData csvDataRecovered = (CsvData) i3.next();
@@ -180,6 +184,7 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 	}
 
 	private void findDeaths(GlobalData globalData, List<CsvData> loadDeaths) {
+		logger.info("findDeaths");
 		Iterator<CsvData> i2 = loadDeaths.iterator();
 		while (i2.hasNext()) {
 			CsvData csvDataDeaths = (CsvData) i2.next();
@@ -195,6 +200,7 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 	}
 
 	private List<CsvData> loadData(File file) throws IOException, InterruptedException {
+		logger.info("loadData");
 
 		List<CsvData> csvDatas = new ArrayList<CsvData>();
 		Reader csvDataReader = new FileReader(file);
@@ -202,7 +208,7 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 
 		for (CSVRecord record : records) {
 			CsvData csvData = new CsvData();
-			String country=record.get(1).replaceAll("\\s+", "_");
+			String country = record.get(1).replaceAll("\\s+", "_");
 			csvData.setProvince_state(record.get(0));
 			csvData.setCountry_region(country);
 			try {
