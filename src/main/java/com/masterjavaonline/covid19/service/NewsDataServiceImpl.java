@@ -9,7 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.masterjavaonline.covid19.adfly.AdflyApiWrapper;
-import com.masterjavaonline.covid19.model.Article;
 import com.masterjavaonline.covid19.model.NewsData;
-import com.masterjavaonline.covid19.model.Shortner;
 
 /**
  * @author balasingh
@@ -38,6 +35,7 @@ public class NewsDataServiceImpl implements NewsDataService {
 	@Override
 	public NewsData getNews() {
 
+		logger.info("getNews");
 		RestTemplate restTemplate = new RestTemplate();
 		AdflyApiWrapper api = new AdflyApiWrapper();
 		String resourceUrl = "http://newsapi.org/v2/top-headlines?country=in&category=&apiKey=70fb93c4d52b49afba307cc244ddf0d7";
@@ -46,16 +44,16 @@ public class NewsDataServiceImpl implements NewsDataService {
 
 		NewsData newsData = response.getBody();
 
-		/*for (Article article : newsData.getArticles()) {
-
-			try {
-				Shortner shortner = new ObjectMapper().readValue(api.shorten(article.getUrl()), Shortner.class);
-				article.setUrl(shortner.getData().get(0).getShort_url());
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
-
-		}*/
+		/*
+		 * for (Article article : newsData.getArticles()) {
+		 * 
+		 * try { Shortner shortner = new
+		 * ObjectMapper().readValue(api.shorten(article.getUrl()), Shortner.class);
+		 * article.setUrl(shortner.getData().get(0).getShort_url()); } catch
+		 * (JsonProcessingException e) { e.printStackTrace(); }
+		 * 
+		 * }
+		 */
 
 		ObjectMapper Obj = new ObjectMapper();
 		try {
@@ -69,7 +67,7 @@ public class NewsDataServiceImpl implements NewsDataService {
 
 			writer.close();
 
-			logger.info("The time is now {}", jsonStr);
+			logger.info("File Path:"+ newsFile.getAbsolutePath());
 
 		}
 
@@ -83,6 +81,7 @@ public class NewsDataServiceImpl implements NewsDataService {
 	@Override
 	public NewsData readNews() {
 
+		logger.info("readNews");
 		String data = "";
 		try {
 			data = new String(Files.readAllBytes(Paths.get(directory + File.separator + "news.json")));
@@ -90,13 +89,10 @@ public class NewsDataServiceImpl implements NewsDataService {
 			return new ObjectMapper().readValue(data, NewsData.class);
 
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

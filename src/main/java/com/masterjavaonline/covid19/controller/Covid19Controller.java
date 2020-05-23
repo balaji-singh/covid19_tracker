@@ -47,7 +47,6 @@ public class Covid19Controller {
 
 		IndiaCovidData indiaCovidData=indiaDataServiceImpl.getCovidData();
 		
-		System.out.println("Email"+indiaCovidData.getContactData().getHelpline_email());
 		modelAndView.addObject("indiaCovidData", indiaCovidData);
 		modelAndView.setViewName("india");
 		return modelAndView;
