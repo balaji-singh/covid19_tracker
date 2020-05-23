@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.masterjavaonline.covid19.model.GlobalCovidData;
+import com.masterjavaonline.covid19.model.IndiaCovidData;
 import com.masterjavaonline.covid19.service.DataUpdateServiceImpl;
+import com.masterjavaonline.covid19.service.IndiaDataServiceImpl;
 
 /**
  * @author balasingh
@@ -26,12 +28,28 @@ public class Covid19Controller {
 	@Autowired
 	private DataUpdateServiceImpl dataUpdateServiceImpl;
 
+	@Autowired
+	private IndiaDataServiceImpl indiaDataServiceImpl;
+
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public ModelAndView getGlobalCovidRecords(ModelAndView modelAndView) throws Exception {
-
+		logger.info("World data Webpage");
 		GlobalCovidData globalCovidData = dataUpdateServiceImpl.getGlobalWHOData();
 		modelAndView.addObject("trackRecords", globalCovidData);
 		modelAndView.setViewName("home");
+		return modelAndView;
+	}
+
+	@RequestMapping(value = { "/in" }, method = RequestMethod.GET)
+	public ModelAndView getIndiaCovidRecords(ModelAndView modelAndView) throws Exception {
+
+		logger.info("India data Webpage");
+
+		IndiaCovidData indiaCovidData=indiaDataServiceImpl.getCovidData();
+		
+		System.out.println("Email"+indiaCovidData.getContactData().getHelpline_email());
+		modelAndView.addObject("indiaCovidData", indiaCovidData);
+		modelAndView.setViewName("india");
 		return modelAndView;
 	}
 

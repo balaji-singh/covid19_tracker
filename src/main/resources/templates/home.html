@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-<script data-ad-client="ca-pub-4553485077018114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script data-ad-client="ca-pub-4553485077018114" async
+	src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
 <script type="text/javascript">
     window._mNHandle = window._mNHandle || {};
@@ -396,6 +397,7 @@ function chartUpdate(id){
 					<li class="nav-item active"><a class="nav-link" href="/">Home
 							<span class="sr-only">(current)</span>
 					</a></li>
+					<li class="nav-item"><a class="nav-link" href="/in">India</a></li>
 					<li class="nav-item"><a class="nav-link" href="/news">News</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="https://www.linkedin.com/in/bala-singh-atmakur/"
@@ -412,171 +414,174 @@ function chartUpdate(id){
 	</nav>
 
 	<div class="row mt-5"></div>
-	<div class="row mt-5"></div>
-	<div class="container-fluid table-responsive">
-		<div class="row">
-			<div class="col">
-				<div class="service_area gray_bg">
-					<div class="container">
+	<div class="row mt-5">
+		<div class="container-fluid table-responsive">
+			<div class="row">
+				<div class="col">
+					<div class="service_area gray_bg">
+						<div class="container">
 
-						<div class="row justify-content-center ">
+							<div class="row justify-content-center ">
 
 
-							<div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
-								<div class="single_service d-flex align-items-center bg-primary">
-									<div class="service_info p-3 mb-2 bg-primary text-white">
-										<h4>
-											<span
-												th:text="*{#numbers.formatInteger(trackRecords.totalConfirmed,3,'COMMA')}"></span>
-										</h4>
-										<p>Total Infected</p>
+								<div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
+									<div
+										class="single_service d-flex align-items-center bg-primary">
+										<div class="service_info p-3 mb-2 bg-primary text-white">
+											<h4>
+												<span
+													th:text="*{#numbers.formatInteger(trackRecords.totalConfirmed,3,'COMMA')}"></span>
+											</h4>
+											<p>Total Infected</p>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
-								<div class="single_service d-flex align-items-center bg-info">
-									<div class="service_info p-3 mb-2 bg-info text-white">
-										<h4>
-											<span
-												th:text="*{#numbers.formatInteger(trackRecords.totalActive,3,'COMMA')}"></span>
-										</h4>
-										<p>Total Active</p>
+								<div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
+									<div class="single_service d-flex align-items-center bg-info">
+										<div class="service_info p-3 mb-2 bg-info text-white">
+											<h4>
+												<span
+													th:text="*{#numbers.formatInteger(trackRecords.totalActive,3,'COMMA')}"></span>
+											</h4>
+											<p>Total Active</p>
+										</div>
 									</div>
 								</div>
-							</div>
 
-							<div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
-								<div class="single_service d-flex align-items-center bg-success">
-									<div class="service_info p-3 mb-2 bg-success text-white">
-										<h4>
-											<span
-												th:text="*{#numbers.formatInteger(trackRecords.totalRecovered,3,'COMMA')}"></span>
-										</h4>
-										<p>Total Recovered</p>
+								<div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
+									<div
+										class="single_service d-flex align-items-center bg-success">
+										<div class="service_info p-3 mb-2 bg-success text-white">
+											<h4>
+												<span
+													th:text="*{#numbers.formatInteger(trackRecords.totalRecovered,3,'COMMA')}"></span>
+											</h4>
+											<p>Total Recovered</p>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
-								<div class="single_service d-flex align-items-center bg-danger">
-									<div class="service_info p-3 mb-2 bg-danger text-white">
-										<h4>
-											<span
-												th:text="*{#numbers.formatInteger(trackRecords.totalDeaths,3,'COMMA')}"></span>
-										</h4>
-										<p>Total Fatal cases</p>
+								<div class="col-md-3 col-5 shadow-sm p-3 mb-5 bg-white rounded">
+									<div class="single_service d-flex align-items-center bg-danger">
+										<div class="service_info p-3 mb-2 bg-danger text-white">
+											<h4>
+												<span
+													th:text="*{#numbers.formatInteger(trackRecords.totalDeaths,3,'COMMA')}"></span>
+											</h4>
+											<p>Total Fatal cases</p>
+										</div>
 									</div>
 								</div>
-							</div>
 
-							<!--  <div class="col-12 text-center">
+								<!--  <div class="col-12 text-center">
 								<span class="text-muted">Last Update: 01 Apr 2020, 6:28PM</span>
 							</div>  -->
 
-						</div>
-						<div class="row justify-content-center ">
-							<div class="col text-center">
-								<div class="fb-like"
-									data-href="http://covid19livetracker.online" data-width=""
-									data-layout="button_count" data-action="like" data-size="large"
-									data-share="true"></div>
-
 							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row"></div>
+							<div class="row justify-content-center ">
+								<div class="col text-center">
+									<div class="fb-like"
+										data-href="http://covid19livetracker.online" data-width=""
+										data-layout="button_count" data-action="like"
+										data-size="large" data-share="true"></div>
 
-		<div class="row">
-			<div class="col">
-				<div class="container table-responsive" align="left" id="myGroup">
-					<table id="tracker" class="table table-hover  table-sm">
-						<thead class="thead-dark">
-							<th class="th-sm">Country</th>
-						</thead>
-						<tbody>
-							<tr
-								th:each="i : ${#numbers.sequence(trackRecords.globalDatas.size() - 1, 0, -1)}"
-								th:with="trackRecord=${#lists.sort(trackRecords.globalDatas)[i]}">
-								<!-- th:each="trackRecord: ${#lists.sort(trackRecords.globalDatas)}"> -->
-								<!-- ${#lists.sort(myList, reverse)} -->
-								<td>
-
-									<button
-										th:id="${trackRecord.country_region+','+trackRecord.province_state}"
-										type="button" class="collapsible"
-										onclick="chartUpdate(this.id);" data-toggle="collapse"
-										th:attr="data-target='#'+${trackRecord.country_region+trackRecord.totalConfirmed}"
-										th:text="${trackRecord.country_region +' '+trackRecord.province_state}"></button>
-
-									<div
-										th:id="${trackRecord.country_region+trackRecord.totalConfirmed}"
-										class="collapse container-fluid" data-parent="#myGroup">
-										<table>
-											<tr>
-												<td
-													th:text="${'Cnformed-'+#numbers.formatInteger(trackRecord.totalConfirmed,3,'COMMA')}"
-													th:style="${trackRecord.totalConfirmed != 0 ? 'color: #c51162;' : 'color:  #c51162'}" />
-												<td
-													th:text="${'Fatal-'+#numbers.formatInteger(trackRecord.totalDeath,3,'COMMA')}"
-													th:style="${trackRecord.totalDeath != 0 ? 'color: #ff4444;' : 'color: #ff4444'}" />
-												<td
-													th:text="${'Recoverd-'+#numbers.formatInteger(trackRecord.totalRecovered,3,'COMMA')}"
-													th:style="${trackRecord.totalRecovered != 0 ? 'color: #007E33;' : 'color: #007E33'}" />
-											</tr>
-										</table>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="col">
-
-				<div class="container-fluid table-responsive">
-
-					<div class="row">
-						<div class="col">
-							<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-
-						</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							<div align="center">
-								<div class="row mx-md-n5">
-									<div class="col px-md-5" align="right">
-										<button class="btn btn-dark" id="line"
-											onClick="updateCartType(this.id);">Line</button>
-									</div>
-									<div class="col px-md-5" align="left">
-										<button class="btn btn-dark" id="column"
-											onClick="updateCartType(this.id);">Column</button>
-									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col">
+				</div>
+			</div>
+			<div class="row"></div>
 
-							<div align="center">
-								<script async
-									src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-								<!-- covid19-link -->
-								<ins class="adsbygoogle" style="display: block"
-									data-ad-client="ca-pub-4553485077018114"
-									data-ad-slot="7973045249" data-ad-format="link"
-									data-full-width-responsive="true"></ins>
-								<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+			<div class="row">
+				<div class="col">
+					<div class="container table-responsive" align="left" id="myGroup">
+						<table id="tracker" class="table table-hover  table-sm">
+							<thead class="thead-dark">
+								<th class="th-sm">Country</th>
+							</thead>
+							<tbody>
+								<tr
+									th:each="i : ${#numbers.sequence(trackRecords.globalDatas.size() - 1, 0, -1)}"
+									th:with="trackRecord=${#lists.sort(trackRecords.globalDatas)[i]}">
+									<!-- th:each="trackRecord: ${#lists.sort(trackRecords.globalDatas)}"> -->
+									<!-- ${#lists.sort(myList, reverse)} -->
+									<td>
+
+										<button
+											th:id="${trackRecord.country_region+','+trackRecord.province_state}"
+											type="button" class="collapsible"
+											onclick="chartUpdate(this.id);" data-toggle="collapse"
+											th:attr="data-target='#'+${trackRecord.country_region+trackRecord.totalConfirmed}"
+											th:text="${trackRecord.country_region +' '+trackRecord.province_state}"></button>
+
+										<div
+											th:id="${trackRecord.country_region+trackRecord.totalConfirmed}"
+											class="collapse container-fluid" data-parent="#myGroup">
+											<table>
+												<tr>
+													<td
+														th:text="${'Cnformed-'+#numbers.formatInteger(trackRecord.totalConfirmed,3,'COMMA')}"
+														th:style="${trackRecord.totalConfirmed != 0 ? 'color: #c51162;' : 'color:  #c51162'}" />
+													<td
+														th:text="${'Fatal-'+#numbers.formatInteger(trackRecord.totalDeath,3,'COMMA')}"
+														th:style="${trackRecord.totalDeath != 0 ? 'color: #ff4444;' : 'color: #ff4444'}" />
+													<td
+														th:text="${'Recoverd-'+#numbers.formatInteger(trackRecord.totalRecovered,3,'COMMA')}"
+														th:style="${trackRecord.totalRecovered != 0 ? 'color: #007E33;' : 'color: #007E33'}" />
+												</tr>
+											</table>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col">
+
+					<div class="container-fluid table-responsive">
+
+						<div class="row">
+							<div class="col">
+								<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div align="center">
+									<div class="row mx-md-n5">
+										<div class="col px-md-5" align="right">
+											<button class="btn btn-dark" id="line"
+												onClick="updateCartType(this.id);">Line</button>
+										</div>
+										<div class="col px-md-5" align="left">
+											<button class="btn btn-dark" id="column"
+												onClick="updateCartType(this.id);">Column</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+
+								<div align="center">
+									<script async
+										src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+									<!-- covid19-link -->
+									<ins class="adsbygoogle" style="display: block"
+										data-ad-client="ca-pub-4553485077018114"
+										data-ad-slot="7973045249" data-ad-format="link"
+										data-full-width-responsive="true"></ins>
+									<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+								</div>
 							</div>
 						</div>
 					</div>
+
+
 				</div>
-
-
 			</div>
 		</div>
 	</div>
