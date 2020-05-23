@@ -9,7 +9,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -30,6 +33,7 @@ import com.masterjavaonline.covid19.model.Shortner;
 public class NewsDataServiceImpl implements NewsDataService {
 
 	private String directory = System.getProperty("user.home");
+	private static final Logger logger = LoggerFactory.getLogger(NewsDataServiceImpl.class);
 
 	@Override
 	public NewsData getNews() {
@@ -42,7 +46,7 @@ public class NewsDataServiceImpl implements NewsDataService {
 
 		NewsData newsData = response.getBody();
 
-		for (Article article : newsData.getArticles()) {
+		/*for (Article article : newsData.getArticles()) {
 
 			try {
 				Shortner shortner = new ObjectMapper().readValue(api.shorten(article.getUrl()), Shortner.class);
@@ -51,7 +55,7 @@ public class NewsDataServiceImpl implements NewsDataService {
 				e.printStackTrace();
 			}
 
-		}
+		}*/
 
 		ObjectMapper Obj = new ObjectMapper();
 		try {
@@ -65,7 +69,8 @@ public class NewsDataServiceImpl implements NewsDataService {
 
 			writer.close();
 
-			System.out.println(jsonStr);
+			logger.info("The time is now {}", jsonStr);
+
 		}
 
 		catch (IOException e) {

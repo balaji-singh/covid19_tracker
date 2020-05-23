@@ -2,12 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-<script data-ad-client="ca-pub-4553485077018114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script data-ad-client="ca-pub-4553485077018114" async
+	src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
 <script type="text/javascript">
-    window._mNHandle = window._mNHandle || {};
-    window._mNHandle.queue = window._mNHandle.queue || [];
-    medianet_versionId = "3121199";
+	window._mNHandle = window._mNHandle || {};
+	window._mNHandle.queue = window._mNHandle.queue || [];
+	medianet_versionId = "3121199";
 </script>
 <script src="https://contextual.media.net/dmedianet.js?cid=8CUW65OLF"
 	async="async"></script>
@@ -20,11 +21,13 @@
 <script async
 	src="https://www.googletagmanager.com/gtag/js?id=UA-150662257-1"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag('js', new Date());
 
-  gtag('config', 'UA-150662257-1');
+	gtag('config', 'UA-150662257-1');
 </script>
 <meta name="description"
 	content=" Track confirmed cases of COVID-19 around World ">
@@ -85,14 +88,14 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#tracker').DataTable({
-		      "pageLength": 10,
-		      "paging": true,
-		      "lengthChange": true,
-		      "searching": true,
-		      "ordering": false,
-		      "info": true,
-		      "autoWidth": false
-		      });
+			"pageLength" : 10,
+			"paging" : true,
+			"lengthChange" : true,
+			"searching" : true,
+			"ordering" : false,
+			"info" : true,
+			"autoWidth" : false
+		});
 		$('.dataTables_length').addClass('bs-select');
 	});
 </script>
@@ -120,53 +123,117 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="/">Home </a></li>
-					<li class="nav-item"><a class="nav-link" href="/in">India</a></li>
-					<li class="nav-item active"><a class="nav-link" href="/news">News<span
+					<li class="nav-item "><a class="nav-link" href="/">Home </a></li>
+					<li class="nav-item active"><a class="nav-link" href="/in">India<span
 							class="sr-only">(current)</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/news">News</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="https://www.linkedin.com/in/bala-singh-atmakur/"
 						target="_blank">About</a></li>
 
-
+					<!-- <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Services</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#">Contact</a></li> -->
 
 				</ul>
 			</div>
 		</div>
 	</nav>
-
 	<div class="row mt-5"></div>
 	<div class="row mt-5">
-		<div class="container">
-			<table class="table table-striped" border="0" width="50%">
-				<tr>
-					<th>News</th>
-				</tr>
-				<tr th:each="article: ${newsData.articles}">
+		<div class="container-fluid table-responsive">
+			<div class="row">
+				<div class="col">
+					<table class="table table-sm ">
+						<thead class="thead-dark">
+							<tr>
+								<th>Contact Information</th>
+							</tr>
+						</thead>
+						<tr th:each="data: ${indiaCovidData.contactData}">
+							<td>
+								<table class="table table-sm ">
+									<tr>
+										<td><div class="col-md-10 blogShort">
+												
+													Email: <span th:text="${data.helpline_email}"></span>
+												
+											</div></td>
+										<td><div class="col-md-10 blogShort">
+												
+													Help line No: <span th:text="${data.helpline_number}"></span>
+												
+											</div></td>
 
-					<td>
+									</tr>
+									<tr>
 
-						<div class="col-md-10 blogShort">
-							<h1>
-								<span th:text="${article.title}"></span>
-							</h1>
-							<img th:src="${article.urlToImage}" alt="post img"
-								class="pull-left img-responsive thumb margin10 img-thumbnail">
+										<td><div class="col-md-10 blogShort">
+												
+													Toll free No: <span th:text="${data.toll_free}"></span>
+												
+											</div></td>
+										<td><div class="col-md-10 blogShort">
+												
+													Source: <a class="btn btn-blog pull-right marginBottom10"
+														th:href="${data.source}" target="_blank">READ MORE</a>
+												
+											</div></td>
 
-							<article>
-								<p>
-									<span th:text="${article.description}"></span>
-								</p>
-							</article>
-							<a class="btn btn-blog pull-right marginBottom10"
-								th:href="${article.url}" target="_blank">READ MORE</a>
-						</div>
-					</td>
-				</tr>
-			</table>
+									</tr>
+
+
+									<tr>
+										<td colspan="2">
+											<table class="table table-sm">
+												<thead class="thead-dark">
+													<tr>
+														<th>State</th>
+														<th>Help Line number</th>
+													</tr>
+												</thead>
+												<tr th:each="details: ${data.contact_details}">
+													<td>
+
+														<div class="col-md-10 blogShort">
+															
+																<span th:text="${details.state_or_UT}"></span>
+															
+
+														</div>
+													</td>
+													<td>
+
+														<div class="col-md-10 blogShort">
+															
+																<span th:text="${details.helpline_number}"></span>
+															
+
+														</div>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
 
 	</div>
+
+	<footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+		<div class="container text-center">
+			<small><a href="https://github.com/CSSEGISandData"
+				target="_blank">Data Source-GHU</a> </small> <small>Copyright &copy;
+				<a href="https://covid19livetracker.online">covid19livetracker.online</a>
+			</small>
+		</div>
+	</footer>
 
 
 </body>
