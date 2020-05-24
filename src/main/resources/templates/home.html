@@ -126,10 +126,10 @@ var totalRecovered=recovered[recovered.length-1];
 	title:{
 		text: "India Covid19 Live Data"
 	},
-	dataPointWidth: 4,
+	dataPointWidth: 2,
 	axisX:{
 		fontWeight: "bold",
-		title: "Confirmed:"+totalConfirmed+"    Fatal:"+totalDeths+ "   Recovered:"+totalRecovered,
+		title: "Confirmed:"+totalConfirmed+ "   Recovered:"+totalRecovered,
 		valueFormatString: "DD/MM/YY",
 		tickLength: 10,
 		crosshair: {
@@ -171,21 +171,6 @@ var totalRecovered=recovered[recovered.length-1];
 	},
 	{
 		type: "column",
-		highlightEnabled: true,
-		//indexLabel: "{y}",
-        indexLabelPlacement: "outside",  
-        indexLabelOrientation: "horizontal",
-		yValueFormatString: "0",
-		axisYIndex: 0,
-		showInLegend: true,
-		name: "Fatal",
-		markerType: "square",
-		xValueFormatString: "DD/MMM/YY",
-		color: "#CC0000",
-		dataPoints: []
-	},
-	{
-		type: "column",
 		//indexLabel: "{y}",
         indexLabelPlacement: "outside",  
         highlightEnabled: true,
@@ -200,17 +185,79 @@ var totalRecovered=recovered[recovered.length-1];
 		dataPoints: []
 	}]
 });
+ 
+ chart2 = new CanvasJS.Chart("chartContainer2", {
+		animationEnabled: true,
+		//animationDuration: 1000,
+		theme: "light2",
+		title:{
+			//text: "India Covid19 Live Data"
+		},
+		dataPointWidth: 2,
+		axisX:{
+			fontWeight: "bold",
+			title: "    Fatal:"+totalDeths,
+			valueFormatString: "DD/MM/YY",
+			tickLength: 10,
+			crosshair: {
+				enabled: true,
+				snapToDataPoint: true
+			}
+		},
+		axisY: {
+			
+			title: "Number of Cases",
+			crosshair: {
+				enabled: true
+			}
+		},
+		toolTip:{
+			shared:true
+		},  
+		legend:{
+			cursor:"pointer",
+			verticalAlign: "bottom",
+			horizontalAlign: "left",
+			dockInsidePlotArea: true,
+			//itemclick: toogleDataSeries
+		},
+		data: [
+		{
+			type: "column",
+			highlightEnabled: true,
+			//indexLabel: "{y}",
+	        indexLabelPlacement: "outside",  
+	        indexLabelOrientation: "horizontal",
+			yValueFormatString: "0",
+			axisYIndex: 0,
+			showInLegend: true,
+			name: "Fatal",
+			markerType: "square",
+			xValueFormatString: "DD/MMM/YY",
+			color: "#CC0000",
+			dataPoints: []
+		}]
+	});
+ 
+ 
+	 
+ 
 dates.forEach(myFunction);
 function myFunction(value, index, array) {
 	
 	xValue = new Date(value);
 	chart.options.data[0].dataPoints.push({ x: xValue, y: parseInt(confirmed[index])});
-	chart.options.data[1].dataPoints.push({ x: xValue, y: parseInt(deaths[index])});
-	chart.options.data[2].dataPoints.push({ x: xValue, y: parseInt(recovered[index])});
+	//chart.options.data[1].dataPoints.push({ x: xValue, y: parseInt(deaths[index])});
+	chart.options.data[1].dataPoints.push({ x: xValue, y: parseInt(recovered[index])});
+	
+	//chart2.options.data[0].dataPoints.push({ x: xValue, y: parseInt(confirmed[index])});
+	chart2.options.data[0].dataPoints.push({ x: xValue, y: parseInt(deaths[index])});
+	//chart2.options.data[2].dataPoints.push({ x: xValue, y: parseInt(recovered[index])});
 	
 	
 }
 chart.render();
+chart2.render();
 
  function toogleDataSeries(e){
 	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -219,6 +266,7 @@ chart.render();
 		e.dataSeries.visible = true;
 	}
 	chart.render();
+	chart2.render();
 } 
 
 
@@ -227,8 +275,11 @@ chart.render();
 function updateCartType(id){
 	chart.options.data[0].type=id;
 	chart.options.data[1].type=id;
-	chart.options.data[2].type=id;
+	
+	chart2.options.data[0].type=id;
+	
 	chart.render();
+	chart2.render();
 	
 }
 
@@ -268,10 +319,10 @@ function chartUpdate(id){
 		title:{
 			text: "India Covid19 Live Data"
 		},
-		dataPointWidth: 4,
+		dataPointWidth: 2,
 		axisX:{
 			fontWeight: "bold",
-			title: "Confirmed:"+totalConfirmed+"    Fatal:"+totalDeths+ "   Recovered:"+totalRecovered,
+			title: "Confirmed:"+totalConfirmed+"   Recovered:"+totalRecovered,
 			valueFormatString: "DD/MM/YY",
 			tickLength: 10,
 			crosshair: {
@@ -312,17 +363,6 @@ function chartUpdate(id){
 			yValueFormatString: "0",
 			axisYIndex: 0,
 			showInLegend: true,
-			name: "Fatal",
-			markerType: "square",
-			xValueFormatString: "DD/MMM/YY",
-			color: "#CC0000",
-			dataPoints: []
-		},
-		{
-			type: "column",
-			yValueFormatString: "0",
-			axisYIndex: 0,
-			showInLegend: true,
 			name: "Recovered",
 			markerType: "square",
 			xValueFormatString: "DD/MMM/YY",
@@ -330,6 +370,54 @@ function chartUpdate(id){
 			dataPoints: []
 		}]
 	});
+	 
+	 chart2 = new CanvasJS.Chart("chartContainer2", {
+			animationEnabled: true,
+			theme: "light2",
+			title:{
+				//text: "India Covid19 Live Data"
+			},
+			dataPointWidth: 2,
+			axisX:{
+				fontWeight: "bold",
+				title: "    Fatal:"+totalDeths,
+				valueFormatString: "DD/MM/YY",
+				tickLength: 10,
+				crosshair: {
+					enabled: true,
+					snapToDataPoint: true
+				}
+			},
+			axisY: {
+				
+				title: "Number of Cases",
+				crosshair: {
+					enabled: true
+				}
+			},
+			toolTip:{
+				shared:true
+			},  
+			legend:{
+				cursor:"pointer",
+				verticalAlign: "bottom",
+				horizontalAlign: "left",
+				dockInsidePlotArea: true,
+				//itemclick: toogleDataSeries
+			},
+			data: [
+			{
+				type: "column",
+				yValueFormatString: "0",
+				axisYIndex: 0,
+				showInLegend: true,
+				name: "Fatal",
+				markerType: "square",
+				xValueFormatString: "DD/MMM/YY",
+				color: "#CC0000",
+				dataPoints: []
+			}]
+		}); 
 	dates.forEach(myFunction);
 	function myFunction(value, index, array) {
 		
@@ -341,25 +429,26 @@ function chartUpdate(id){
 			catch(err) {
 				chart.options.data[0].dataPoints.push({ x: xValue, y: parseInt(0)});
 			}
-			try {
-			chart.options.data[1].dataPoints.push({ x: xValue, y: parseInt(deaths[index])});
+			 try {
+			chart2.options.data[0].dataPoints.push({ x: xValue, y: parseInt(deaths[index])});
 			
+			}
+			catch(err) {
+			 
+				chart2.options.data[0].dataPoints.push({ x: xValue, y: parseInt(0)});
+			} 
+			try {
+				chart.options.data[1].dataPoints.push({ x: xValue, y: parseInt(recovered[index])});
 			}
 			catch(err) {
 			 
 				chart.options.data[1].dataPoints.push({ x: xValue, y: parseInt(0)});
 			}
-			try {
-				chart.options.data[2].dataPoints.push({ x: xValue, y: parseInt(recovered[index])});
-			}
-			catch(err) {
-			 
-				chart.options.data[2].dataPoints.push({ x: xValue, y: parseInt(0)});
-			}
 		
 		
 	}
 	chart.render();
+	chart2.render();
 
 	
 	 function toogleDataSeries(e){
@@ -369,6 +458,7 @@ function chartUpdate(id){
 			e.dataSeries.visible = true;
 		}
 		chart.render();
+		chart2.render();
 	} 
 
 }
@@ -394,10 +484,12 @@ function chartUpdate(id){
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link" href="/">Home
+					<li class="nav-item active"><a class="nav-link" href="/">World
 							<span class="sr-only">(current)</span>
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="/in">India</a></li>
+					<li class="nav-item"><a class="nav-link" href="/inhelp"><img
+							src="https://www.worldometers.info/img/flags/in-flag.gif"
+							height="20" width="20">Help Line</a></li>
 					<li class="nav-item"><a class="nav-link" href="/news">News</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="https://www.linkedin.com/in/bala-singh-atmakur/"
@@ -512,7 +604,7 @@ function chartUpdate(id){
 											type="button" class="collapsible"
 											onclick="chartUpdate(this.id);" data-toggle="collapse"
 											th:attr="data-target='#'+${trackRecord.country_region+trackRecord.totalConfirmed}"
-											th:text="${trackRecord.country_region +' '+trackRecord.province_state}"></button>
+											th:text="${trackRecord.country_region +' '+trackRecord.province_state+'- '+#numbers.formatInteger(trackRecord.totalConfirmed,3,'COMMA')}"></button>
 
 										<div
 											th:id="${trackRecord.country_region+trackRecord.totalConfirmed}"
@@ -539,11 +631,17 @@ function chartUpdate(id){
 				</div>
 				<div class="col">
 
-					<div class="container-fluid table-responsive">
+					<div class="container table-responsive">
 
 						<div class="row">
 							<div class="col">
 								<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div id="chartContainer2" style="height: 370px; width: 100%;"></div>
 
 							</div>
 						</div>

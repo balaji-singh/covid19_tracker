@@ -40,7 +40,7 @@ public class Covid19Controller {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/in" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/inhelp" }, method = RequestMethod.GET)
 	public ModelAndView getIndiaCovidRecords(ModelAndView modelAndView) throws Exception {
 
 		logger.info("India data Webpage");
@@ -48,7 +48,7 @@ public class Covid19Controller {
 		IndiaCovidData indiaCovidData=indiaDataServiceImpl.getCovidData();
 		
 		modelAndView.addObject("indiaCovidData", indiaCovidData);
-		modelAndView.setViewName("india");
+		modelAndView.setViewName("inhelp");
 		return modelAndView;
 	}
 

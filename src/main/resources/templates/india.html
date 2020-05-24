@@ -142,7 +142,7 @@
 	</nav>
 	<div class="row mt-5"></div>
 	<div class="row mt-5">
-		<div class="container-fluid table-responsive">
+		<div class="container table-responsive">
 			<div class="row">
 				<div class="col">
 					<table class="table table-sm ">
@@ -155,12 +155,12 @@
 							<td>
 								<table class="table table-sm ">
 									<tr>
-										<td><div class="col-md-10 blogShort">
+										<td><div class="col-md-10 ">
 												
 													Email: <span th:text="${data.helpline_email}"></span>
 												
 											</div></td>
-										<td><div class="col-md-10 blogShort">
+										<td><div class="col-md-10 ">
 												
 													Help line No: <span th:text="${data.helpline_number}"></span>
 												
@@ -169,15 +169,15 @@
 									</tr>
 									<tr>
 
-										<td><div class="col-md-10 blogShort">
+										<td><div class="col-md-10 ">
 												
 													Toll free No: <span th:text="${data.toll_free}"></span>
 												
 											</div></td>
-										<td><div class="col-md-10 blogShort">
+										<td><div class="col-md-10 ">
 												
 													Source: <a class="btn btn-blog pull-right marginBottom10"
-														th:href="${data.source}" target="_blank">READ MORE</a>
+														th:href="${data.source}" target="_blank">Open Doc</a>
 												
 											</div></td>
 
@@ -196,7 +196,7 @@
 												<tr th:each="details: ${data.contact_details}">
 													<td>
 
-														<div class="col-md-10 blogShort">
+														<div class="col-md-10 ">
 															
 																<span th:text="${details.state_or_UT}"></span>
 															
@@ -205,7 +205,7 @@
 													</td>
 													<td>
 
-														<div class="col-md-10 blogShort">
+														<div class="col-md-10 ">
 															
 																<span th:text="${details.helpline_number}"></span>
 															
