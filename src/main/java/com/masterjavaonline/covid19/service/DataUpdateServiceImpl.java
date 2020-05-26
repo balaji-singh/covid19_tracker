@@ -128,7 +128,6 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 
 	private int getRecordsTotal(List<CsvData> loadConfirmed) {
 
-		logger.info("getRecordsTotal");
 		int total = 0;
 
 		for (CsvData csvData : loadConfirmed) {
@@ -142,7 +141,6 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 
 	private List<GlobalData> processData(List<CsvData> loadConfirmed, List<CsvData> loadDeaths,
 			List<CsvData> loadRecovered) {
-		logger.info("processData");
 
 		Iterator<CsvData> i1 = loadConfirmed.iterator();
 
@@ -168,7 +166,6 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 	}
 
 	private void findRecovered(GlobalData globalData, List<CsvData> loadRecovered) {
-		logger.info("findRecovered");
 		Iterator<CsvData> i3 = loadRecovered.iterator();
 		while (i3.hasNext()) {
 			CsvData csvDataRecovered = (CsvData) i3.next();
@@ -184,7 +181,6 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 	}
 
 	private void findDeaths(GlobalData globalData, List<CsvData> loadDeaths) {
-		logger.info("findDeaths");
 		Iterator<CsvData> i2 = loadDeaths.iterator();
 		while (i2.hasNext()) {
 			CsvData csvDataDeaths = (CsvData) i2.next();
@@ -200,7 +196,6 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 	}
 
 	private List<CsvData> loadData(File file) throws IOException, InterruptedException {
-		logger.info("loadData");
 
 		List<CsvData> csvDatas = new ArrayList<CsvData>();
 		Reader csvDataReader = new FileReader(file);
