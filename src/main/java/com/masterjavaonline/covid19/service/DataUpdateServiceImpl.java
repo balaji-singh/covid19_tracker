@@ -58,7 +58,6 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 	}
 
 	private void updateURLToFile(URL url, File file) {
-		logger.info("updateURLToFile");
 
 		try {
 			InputStream input = url.openStream();
@@ -94,7 +93,6 @@ public class DataUpdateServiceImpl implements DataUpdateService {
 
 	@Override
 	public GlobalCovidData getGlobalWHOData() throws IOException, InterruptedException {
-		logger.info("getGlobalWHOData");
 		String directory = System.getProperty("user.home");
 		File fileConfirmed = new File(directory + File.separator + "time_series_covid19_confirmed_global.csv");
 		File fileDeaths = new File(directory + File.separator + "time_series_covid19_deaths_global.csv");

@@ -27,7 +27,7 @@ public class ScheduledTasks {
 	@Autowired
 	private NewsDataServiceImpl newsDataServiceImpl;
 	
-	@Scheduled(fixedRate = 500000)
+	@Scheduled(fixedRate = 1800000)
 	public void reportCurrentTime() throws Exception {
 		dataUpdateServiceImpl.updateGlobalWHOData();
 		newsDataServiceImpl.getNews();

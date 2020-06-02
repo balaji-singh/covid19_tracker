@@ -35,7 +35,7 @@ public class IndiaDataServiceImpl implements IndiaDataService {
 
 	private ContactData getContactData() {
 
-		logger.info("Fetching COntacts Data");
+		logger.info("Fetching Contacts Data");
 		ResponseEntity<ContactData> response = restTemplate.getForEntity(resourceUrl + "helpline_numbers",
 				ContactData.class);
 		return response.getBody();
